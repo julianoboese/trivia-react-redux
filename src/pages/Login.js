@@ -20,11 +20,11 @@ class Login extends Component {
     this.setState({ [name]: value });
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
     const { name, email } = this.state;
     const { userLogin, history } = this.props;
-    userLogin(name, email);
+    await userLogin(name, email);
     history.push('/game');
   }
 
