@@ -1,13 +1,26 @@
-import { } from '../actions';
+import { GET_TOKEN } from '../actions';
 
 const INITIAL_STATE = {
+  token: '',
   player: {
     name: '',
     assertions: 0,
     score: 0,
     gravatarEmail: '',
   },
+  ranking: [],
 };
 
-const rootReducer = (state = INITIAL_STATE) => state;
+const rootReducer = (state = INITIAL_STATE, { type, payload }) => {
+  switch (type) {
+  case GET_TOKEN:
+    return ({
+      ...state,
+      token: payload.token,
+    });
+  default:
+    return state;
+  }
+};
+
 export default rootReducer;
