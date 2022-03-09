@@ -11,15 +11,10 @@ class Header extends Component {
     componentDidMount() {
       const { email } = this.props;
       const hash = md5(email).toString();
-      fetch(
-        `https://www.gravatar.com/avatar/${hash}`,
-      )
-        .then((res) => res.json())
-        .then((json) => {
-          this.setState({
-            hash: json,
-          });
-        });
+      this.setState({
+        hash,
+      });
+      console.log(hash);
     }
 
     render() {
@@ -27,7 +22,7 @@ class Header extends Component {
       return (
         <div className="playerInfo">
           <div className="pictureContainer">
-            <img alt="player" data-testid="header-profile-picture" src={ hash } />
+            <img alt="player" data-testid="header-profile-picture" src={ `https://www.gravatar.com/avatar/${hash}` } />
           </div>
           <span data-testid="header-player-name" />
           <span data-testid="header-score">0</span>

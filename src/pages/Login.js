@@ -22,8 +22,9 @@ class Login extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    const { email } = this.state;
     const { getToken, history } = this.props;
-    getToken();
+    getToken(email);
     history.push('/game');
   }
 
@@ -74,7 +75,7 @@ Login.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getToken: () => dispatch(getTokenAction()),
+  getToken: (email) => dispatch(getTokenAction(email)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
