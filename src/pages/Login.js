@@ -59,7 +59,7 @@ class Login extends Component {
 
         </form>
         <Link to="/config">
-          <button data-testid="settings-title" type="button">Configurações</button>
+          <button data-testid="btn-settings" type="button">Configurações</button>
         </Link>
 
       </>
