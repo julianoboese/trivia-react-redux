@@ -31,7 +31,7 @@ export default class Login extends Component {
         <input
           type="text"
           name="name"
-          placeholder="senha"
+          placeholder="nome"
           value={ name }
           onChange={ this.handleChange }
           data-testid="input-player-name"
