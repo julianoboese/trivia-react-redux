@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getTokenAction } from '../redux/actions';
 
-export default class Login extends Component {
+class Login extends Component {
   state = {
     name: '',
     email: '',
@@ -16,13 +19,12 @@ export default class Login extends Component {
     this.setState({ [name]: value });
   }
 
-  // handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const { email } = this.state;
-  //   const { userLogin, history } = this.props;
-  //   userLogin(email);
-  //   history.push('/carteira');
-  // }
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const { getToken, history } = this.props;
+    getToken();
+    history.push('/game');
+  }
 
   render() {
     const { email, name } = this.state;
@@ -55,3 +57,16 @@ export default class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  getToken: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  getToken: () => dispatch(getTokenAction()),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
