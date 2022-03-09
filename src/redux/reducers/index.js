@@ -17,7 +17,7 @@ const rootReducer = (state = INITIAL_STATE, { type, payload }) => {
     return ({
       ...state,
       token: payload.token,
-      player: { ...state.player, gravatarEmail: payload.email },
+      player: { ...state.player, name: payload.name, gravatarEmail: payload.email },
     });
   default:
     return state;
