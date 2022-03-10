@@ -169,3 +169,14 @@ class Game extends Component {
 // export default connect(mapStateToProps)(Game);
 
 export default Game;
+
+// {
+//   name: nome-da-pessoa,
+//   assertions: número-de-acertos,
+//   score: pontuação,
+//   gravatarEmail: email-da-pessoa,
+// }
+
+// ranking: [
+//   { name: nome-da-pessoa, score: 10, picture: url-da-foto-no-gravatar }
+// ]
