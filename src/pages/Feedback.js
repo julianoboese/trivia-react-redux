@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
 
-export default class Feedback extends Component {
+class Feedback extends Component {
   render() {
+    const { assertions } = this.props;
+    const MIN_ASSERTIONS = 3;
     return (
       <>
         <Header />
-        <span data-testid="feedback-text">Xablau</span>
+        <span data-testid="feedback-text">
+          {assertions < MIN_ASSERTIONS ? 'Could be better...' : 'Well Done!'}
+        </span>
         <Link to="/">
           <button type="button" data-testid="btn-play-again">Play Again</button>
         </Link>
@@ -15,3 +21,13 @@ export default class Feedback extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  assertions: state.player.assertions,
+});
+
+Feedback.propTypes = {
+  assertions: PropTypes.string.isRequired,
+};
+
+export default connect(mapStateToProps)(Feedback);
