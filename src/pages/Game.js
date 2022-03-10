@@ -23,26 +23,21 @@ class Game extends Component {
     });
   }
 
-  renderAnswerButtons = (correct, incorrects, type) => {
+  renderAnswerButtons = (correct, incorrects) => {
+    const answers = [
+      { status: 'correct', text: correct, testid: 'correct-answer' },
+      ...incorrects.reduce((acc, curr, index) => ([
+        ...acc,
+        { status: `wrong_${index}`, text: curr, testid: `wrong-answer-${index}` },
+      ]), []),
+    ];
+
     const MEIO = 0.5;
-    let answersObj = {
-      correct: { text: correct, testid: 'correct-answer' },
-      wrong_1: { text: incorrects[0], testid: 'wrong-answer-0' },
-    };
-    if (type === 'multiple') {
-      answersObj = {
-        correct: { text: correct, testid: 'correct-answer' },
-        wrong_1: { text: incorrects[0], testid: 'wrong-answer-0' },
-        wrong_2: { text: incorrects[1], testid: 'wrond-answer-1' },
-        wrong_3: { text: incorrects[2], testid: 'wrond-answer-2' },
-      };
-    }
+    const randomAnswers = answers.sort(() => Math.random() - MEIO);
 
-    const answerArray = Object.entries(answersObj).sort(() => Math.random() - MEIO);
-
-    return answerArray.map((answer) => (
-      <button key={ answer[0] } type="button" data-testid={ answer[1].testid }>
-        {answer[1].text}
+    return randomAnswers.map((answer) => (
+      <button key={ answer.status } type="button" data-testid={ answer.testid }>
+        {answer.text}
       </button>
     ));
   }
