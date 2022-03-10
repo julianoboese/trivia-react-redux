@@ -19,16 +19,6 @@ export async function getQuestionsData(token, questionsQuantity) {
     } catch (error) {
       return error;
     }
-  } else { // esse else existe apenas enquanto o token não é salvo em algum lugar além do redux, para evitar de quebrar a aplicação; se salvar no local/sessionStorage ele é denessário.
-    const newToken = await getNewToken();
-    try {
-      const url = `https://opentdb.com/api.php?amount=${questionsQuantity}&token=${newToken.token}`;
-      const response = await fetch(url);
-      const triviaData = await response.json();
-      return triviaData;
-    } catch (error) {
-      return error;
-    }
   }
 }
 

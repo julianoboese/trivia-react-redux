@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+// import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
+import { getStoredToken } from '../services/localStorageAPI';
 import Header from '../components/Header';
 import { getNewGameData } from '../services/fetchQuestions';
 
@@ -11,7 +12,8 @@ class Game extends Component {
   }
 
   async componentDidMount() {
-    const { token } = this.props;
+    // const { token } = this.props;
+    const token = getStoredToken();
     const defaultQuestionsQuantity = 5;
     const quantity = defaultQuestionsQuantity;
     console.log(token);
@@ -80,12 +82,14 @@ class Game extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  token: state.token,
-});
+// const mapStateToProps = (state) => ({
+//   token: state.token,
+// });
 
-Game.propTypes = {
-  token: PropTypes.string.isRequired,
-};
+// Game.propTypes = {
+//   token: PropTypes.string.isRequired,
+// };
 
-export default connect(mapStateToProps)(Game);
+// export default connect(mapStateToProps)(Game);
+
+export default Game;
