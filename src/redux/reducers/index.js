@@ -24,7 +24,9 @@ const rootReducer = (state = INITIAL_STATE, { type, payload }) => {
     return ({
       ...state,
       player: {
-        ...state.player, assertions: (state.assertions + 1), score: payload.score,
+        ...state.player,
+        assertions: (+state.assertions + 1),
+        score: (+state.score + +payload.score),
       },
     });
 

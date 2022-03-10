@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getStoredToken } from '../services/localStorageAPI';
 import Header from '../components/Header';
 import { getNewGameData } from '../services/fetchQuestions';
+import { updateScore } from '../redux/actions';
 import './Game.css';
 
 class Game extends Component {
@@ -42,17 +43,29 @@ class Game extends Component {
   }
 
   handleAnswerClick = ({ target }) => {
-    const { intervalId } = this.state;
+    const { dispatchScore } = this.props;
+    const { intervalId, questions, currentQuestion: current, timer } = this.state;
+    const { difficulty } = questions[current];
+    const multiplier = { hard: 3, medium: 2, easy: 1 };
+    const minScore = 10;
+    const score = ((multiplier[difficulty] * timer) + minScore);
+
     clearInterval(intervalId);
     const answerButtons = target.parentElement.children;
     const buttons = Object.values(answerButtons);
+
     buttons.forEach((button) => {
       if (button.value === 'correct') button.classList.add('correct');
       else button.classList.add('incorrect');
     });
+
     this.setState({
       answer: target.value,
     });
+    console.log(score);
+    if (target.value === 'correct') {
+      this.setState({}, () => dispatchScore(score));
+    }
   }
 
   handleNextButton = () => {
@@ -171,19 +184,19 @@ Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  dispatchScore: PropTypes.func.isRequired,
 };
 
-// const mapStateToProps = (state) => ({
-//   token: state.token,
-// });
+const mapStateToProps = (state) => ({
+  email: state.player.gravatarEmail,
+  name: state.player.name,
+});
 
-// Game.propTypes = {
-//   token: PropTypes.string.isRequired,
-// };
+const mapDispatchToProps = (dispatch) => ({
+  dispatchScore: (score) => dispatch(updateScore(score)),
+});
 
-// export default connect(mapStateToProps)(Game);
-
-export default Game;
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
 
 // {
 //   name: nome-da-pessoa,
