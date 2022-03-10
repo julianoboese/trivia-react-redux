@@ -47,7 +47,7 @@ class Game extends Component {
       questions.map((questionData, index) => {
         const {
           correct_answer: correct, incorrect_answers: incorrects,
-          category, question, dificult, type,
+          category, question, dificult,
         } = questionData;
         const buttons = this.renderAnswerButtons(correct, incorrects);
         return (
