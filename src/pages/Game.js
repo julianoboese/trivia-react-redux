@@ -16,7 +16,7 @@ class Game extends Component {
     answer: '',
     intervalId: 0,
     gameScore: 0,
-    timer: 30,
+    timer: 31,
   }
 
   async componentDidMount() {
@@ -27,8 +27,8 @@ class Game extends Component {
     this.setState({
       questions: gameData.results,
     }, () => {
-      this.setRandomAnswers();
       this.updateTimer();
+      this.setRandomAnswers();
     });
   }
 
@@ -55,7 +55,7 @@ class Game extends Component {
   handleAnswerClick = ({ target }) => {
     const { dispatchScore } = this.props;
 
-    const { intervalId, questions, currentQuestion: current,
+    const { questions, currentQuestion: current,
       timer, gameScore } = this.state;
 
     const { difficulty } = questions[current];
@@ -64,7 +64,12 @@ class Game extends Component {
     const AnswerScore = ((multiplier[difficulty] * timer) + minScore);
     const totalScore = (AnswerScore + gameScore);
 
-    clearInterval(intervalId);
+    const ONE_SECOND = 1000;
+    setTimeout(() => {
+      const { intervalId } = this.state;
+      clearInterval(intervalId);
+    }, ONE_SECOND);
+
     const answerButtons = target.parentElement.children;
     const buttons = Object.values(answerButtons);
 
