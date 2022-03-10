@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { getStoredToken } from '../services/localStorageAPI';
 import Header from '../components/Header';
 import { getNewGameData } from '../services/fetchQuestions';
+import './Game.css';
 
 class Game extends Component {
   state = {
@@ -22,6 +23,15 @@ class Game extends Component {
     });
   }
 
+  handleAnswerClick = ({ target }) => {
+    const answerButtons = target.parentElement.children;
+    const buttons = Object.values(answerButtons);
+    buttons.forEach((button) => {
+      if (button.value === 'correct') button.classList.add('correct');
+      else button.classList.add('incorrect');
+    });
+  }
+
   renderAnswerButtons = (correct, incorrects) => {
     const answers = [
       { status: 'correct', text: correct, testid: 'correct-answer' },
@@ -35,7 +45,14 @@ class Game extends Component {
     const randomAnswers = answers.sort(() => Math.random() - MEIO);
 
     return randomAnswers.map((answer) => (
-      <button key={ answer.status } type="button" data-testid={ answer.testid }>
+      <button
+        key={ answer.status }
+        type="button"
+        data-testid={ answer.testid }
+        onClick={ this.handleAnswerClick }
+        value={ answer.status }
+        className="answer-button"
+      >
         {answer.text}
       </button>
     ));
