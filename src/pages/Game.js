@@ -11,6 +11,7 @@ class Game extends Component {
     questions: [],
     currentQuestion: 0,
     answer: '',
+    timer: 30,
   }
 
   async componentDidMount() {
@@ -21,7 +22,18 @@ class Game extends Component {
     const gameData = await getNewGameData(token, quantity);
     this.setState({
       questions: gameData.results,
-    });
+    }, () => this.updateTimer());
+  }
+
+  updateTimer = () => {
+    const ONE_SECOND = 1000;
+    setInterval(() => {
+      this.setState((prevState) => {
+        if (prevState.timer > 0) {
+          return { timer: prevState.timer - 1 };
+        }
+      });
+    }, ONE_SECOND);
   }
 
   handleAnswerClick = ({ target }) => {
@@ -49,6 +61,7 @@ class Game extends Component {
     const MEIO = 0.5;
     const randomAnswers = answers.sort(() => Math.random() - MEIO);
 
+    const { timer } = this.state;
     return randomAnswers.map((answer) => (
       <button
         key={ answer.status }
@@ -57,7 +70,7 @@ class Game extends Component {
         onClick={ this.handleAnswerClick }
         value={ answer.status }
         className="answer-button"
-        disabled={ (answered !== '') }
+        disabled={ answered !== '' || timer === 0 }
       >
         {answer.text}
       </button>
@@ -70,11 +83,11 @@ class Game extends Component {
       questions.map((questionData, index) => {
         const {
           correct_answer: correct, incorrect_answers: incorrects,
-          category, question, dificult,
+          category, question, difficulty,
         } = questionData;
         const buttons = this.renderAnswerButtons(correct, incorrects);
         return (
-          <div key={ `${dificult}, ${index}` }>
+          <div key={ `${difficulty}, ${index}` }>
             <p data-testid="question-category">{`categoria: ${category}`}</p>
             <p data-testid="question-text">{ question }</p>
             <div data-testid="answer-options">
@@ -86,9 +99,9 @@ class Game extends Component {
     );
   }
 
-  handleButtonNext = () => {
+  handleNextButton = () => {
     const { currentQuestion, questions } = this.state;
-    if (currentQuestion <= questions.length) {
+    if (currentQuestion < questions.length - 1) {
       this.setState({
         answer: '',
         currentQuestion: currentQuestion + 1,
@@ -104,11 +117,11 @@ class Game extends Component {
         <section>
           { this.renderQuestions()[currentQuestion] }
           {
-            (answer !== '')
+            answer !== ''
             && (
               <button
                 type="button"
-                onClick={ this.handleButtonNext }
+                onClick={ this.handleNextButton }
                 data-testid="btn-next"
               >
                 Next
