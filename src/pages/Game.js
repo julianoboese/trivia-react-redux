@@ -37,6 +37,7 @@ class Game extends Component {
   }
 
   renderAnswerButtons = (correct, incorrects) => {
+    const { answer: answered } = this.state;
     const answers = [
       { status: 'correct', text: correct, testid: 'correct-answer' },
       ...incorrects.reduce((acc, curr, index) => ([
@@ -56,6 +57,7 @@ class Game extends Component {
         onClick={ this.handleAnswerClick }
         value={ answer.status }
         className="answer-button"
+        disabled={ (answered !== '') }
       >
         {answer.text}
       </button>
@@ -85,8 +87,8 @@ class Game extends Component {
   }
 
   handleButtonNext = () => {
-    const { currentQuestion, answer } = this.state;
-    if (answer === 'correct') {
+    const { currentQuestion, questions } = this.state;
+    if (currentQuestion <= questions.length) {
       this.setState({
         answer: '',
         currentQuestion: currentQuestion + 1,
@@ -102,8 +104,16 @@ class Game extends Component {
         <section>
           { this.renderQuestions()[currentQuestion] }
           {
-            (answer === 'correct')
-            && <button type="button" onClick={ this.handleButtonNext }> Next </button>
+            (answer !== '')
+            && (
+              <button
+                type="button"
+                onClick={ this.handleButtonNext }
+                data-testid="btn-next"
+              >
+                Next
+              </button>
+            )
           }
         </section>
       </>
