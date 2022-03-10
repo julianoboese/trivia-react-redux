@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { getStoredToken } from '../services/localStorageAPI';
 import Header from '../components/Header';
 import { getNewGameData } from '../services/fetchQuestions';
@@ -70,6 +70,15 @@ class Game extends Component {
       }, () => {
         this.setRandomAnswers();
         this.updateTimer();
+      });
+    } else {
+      const { history } = this.props;
+      this.setState({
+        answer: '',
+        currentQuestion: 0,
+        timer: 30,
+      }, () => {
+        history.push('/feedback');
       });
     }
   }
@@ -157,6 +166,12 @@ class Game extends Component {
     );
   }
 }
+
+Game.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 // const mapStateToProps = (state) => ({
 //   token: state.token,
