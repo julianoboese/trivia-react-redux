@@ -14,8 +14,7 @@ class Game extends Component {
   async componentDidMount() {
     // const { token } = this.props;
     const token = getStoredToken();
-    const defaultQuestionsQuantity = 5;
-    const quantity = defaultQuestionsQuantity;
+    const quantity = 5;
     console.log(token);
     const gameData = await getNewGameData(token, quantity);
     this.setState({
