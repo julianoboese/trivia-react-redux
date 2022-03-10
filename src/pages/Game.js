@@ -20,7 +20,6 @@ class Game extends Component {
     // const { token } = this.props;
     const token = getStoredToken();
     const quantity = 5;
-    console.log(token);
     const gameData = await getNewGameData(token, quantity);
     this.setState({
       questions: gameData.results,
@@ -37,6 +36,7 @@ class Game extends Component {
         if (prevState.timer > 0) {
           return { intervalId, timer: prevState.timer - 1 };
         }
+        clearInterval(intervalId);
       });
     }, ONE_SECOND);
   }
