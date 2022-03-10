@@ -10,6 +10,7 @@ class Game extends Component {
   state = {
     questions: [],
     currentQuestion: 0,
+    answer: '',
   }
 
   async componentDidMount() {
@@ -29,6 +30,9 @@ class Game extends Component {
     buttons.forEach((button) => {
       if (button.value === 'correct') button.classList.add('correct');
       else button.classList.add('incorrect');
+    });
+    this.setState({
+      answer: target.value,
     });
   }
 
@@ -80,13 +84,27 @@ class Game extends Component {
     );
   }
 
+  handleButtonNext = () => {
+    const { currentQuestion, answer } = this.state;
+    if (answer === 'correct') {
+      this.setState({
+        answer: '',
+        currentQuestion: currentQuestion + 1,
+      });
+    }
+  }
+
   render() {
-    const { currentQuestion } = this.state;
+    const { currentQuestion, answer } = this.state;
     return (
       <>
         <Header />
         <section>
           { this.renderQuestions()[currentQuestion] }
+          {
+            (answer === 'correct')
+            && <button type="button" onClick={ this.handleButtonNext }> Next </button>
+          }
         </section>
       </>
     );
