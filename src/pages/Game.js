@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
-import { getStoredToken } from '../services/localStorageAPI';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import md5 from 'crypto-js/md5';
+import { getStoredToken, saveStoredScore } from '../services/localStorageAPI';
 import Header from '../components/Header';
 import { getNewGameData } from '../services/fetchQuestions';
+import { updateScore } from '../redux/actions';
 import './Game.css';
 
 class Game extends Component {
@@ -13,7 +15,8 @@ class Game extends Component {
     randomAnswers: [],
     answer: '',
     intervalId: 0,
-    timer: 30,
+    gameScore: 0,
+    timer: 31,
   }
 
   async componentDidMount() {
@@ -24,9 +27,17 @@ class Game extends Component {
     this.setState({
       questions: gameData.results,
     }, () => {
-      this.setRandomAnswers();
       this.updateTimer();
+      this.setRandomAnswers();
     });
+  }
+
+  componentWillUnmount() {
+    const { name, email } = this.props;
+    const { gameScore } = this.state;
+    const hash = md5(email).toString();
+    const picture = `https://www.gravatar.com/avatar/${hash}`;
+    saveStoredScore(name, gameScore, picture);
   }
 
   updateTimer = () => {
@@ -42,17 +53,40 @@ class Game extends Component {
   }
 
   handleAnswerClick = ({ target }) => {
-    const { intervalId } = this.state;
-    clearInterval(intervalId);
+    const { dispatchScore } = this.props;
+
+    const { questions, currentQuestion: current,
+      timer, gameScore } = this.state;
+
+    const { difficulty } = questions[current];
+    const multiplier = { hard: 3, medium: 2, easy: 1 };
+    const minScore = 10;
+    const AnswerScore = ((multiplier[difficulty] * timer) + minScore);
+    const totalScore = (AnswerScore + gameScore);
+
+    const ONE_SECOND = 1000;
+    setTimeout(() => {
+      const { intervalId } = this.state;
+      clearInterval(intervalId);
+    }, ONE_SECOND);
+
     const answerButtons = target.parentElement.children;
     const buttons = Object.values(answerButtons);
+
     buttons.forEach((button) => {
       if (button.value === 'correct') button.classList.add('correct');
       else button.classList.add('incorrect');
     });
+
     this.setState({
       answer: target.value,
     });
+
+    if (target.value === 'correct') {
+      this.setState({ gameScore: totalScore }, () => {
+        dispatchScore(totalScore);
+      });
+    }
   }
 
   handleNextButton = () => {
@@ -70,6 +104,15 @@ class Game extends Component {
       }, () => {
         this.setRandomAnswers();
         this.updateTimer();
+      });
+    } else {
+      const { history } = this.props;
+      this.setState({
+        answer: '',
+        currentQuestion: 0,
+        timer: 30,
+      }, () => {
+        history.push('/feedback');
       });
     }
   }
@@ -158,14 +201,33 @@ class Game extends Component {
   }
 }
 
-// const mapStateToProps = (state) => ({
-//   token: state.token,
-// });
+Game.propTypes = {
+  dispatchScore: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+};
 
-// Game.propTypes = {
-//   token: PropTypes.string.isRequired,
-// };
+const mapStateToProps = (state) => ({
+  email: state.player.gravatarEmail,
+  name: state.player.name,
+});
 
-// export default connect(mapStateToProps)(Game);
+const mapDispatchToProps = (dispatch) => ({
+  dispatchScore: (score) => dispatch(updateScore(score)),
+});
 
-export default Game;
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
+
+// {
+//   name: nome-da-pessoa,
+//   assertions: número-de-acertos,
+//   score: pontuação,
+//   gravatarEmail: email-da-pessoa,
+// }
+
+// ranking: [
+//   { name: nome-da-pessoa, score: 10, picture: url-da-foto-no-gravatar }
+// ]
