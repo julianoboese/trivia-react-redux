@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getStoredToken } from '../services/localStorageAPI';
+import md5 from 'crypto-js/md5';
+import { getStoredToken, saveStoredScore } from '../services/localStorageAPI';
 import Header from '../components/Header';
 import { getNewGameData } from '../services/fetchQuestions';
 import { updateScore } from '../redux/actions';
@@ -14,6 +15,7 @@ class Game extends Component {
     randomAnswers: [],
     answer: '',
     intervalId: 0,
+    gameScore: 0,
     timer: 30,
   }
 
@@ -30,6 +32,14 @@ class Game extends Component {
     });
   }
 
+  componentWillUnmount() {
+    const { name, email } = this.props;
+    const { gameScore } = this.state;
+    const hash = md5(email).toString();
+    const picture = `https://www.gravatar.com/avatar/${hash}`;
+    saveStoredScore(name, gameScore, picture);
+  }
+
   updateTimer = () => {
     const ONE_SECOND = 1000;
     const intervalId = setInterval(() => {
@@ -44,11 +54,15 @@ class Game extends Component {
 
   handleAnswerClick = ({ target }) => {
     const { dispatchScore } = this.props;
-    const { intervalId, questions, currentQuestion: current, timer } = this.state;
+
+    const { intervalId, questions, currentQuestion: current,
+      timer, gameScore } = this.state;
+
     const { difficulty } = questions[current];
     const multiplier = { hard: 3, medium: 2, easy: 1 };
     const minScore = 10;
-    const score = ((multiplier[difficulty] * timer) + minScore);
+    const AnswerScore = ((multiplier[difficulty] * timer) + minScore);
+    const totalScore = (AnswerScore + gameScore);
 
     clearInterval(intervalId);
     const answerButtons = target.parentElement.children;
@@ -62,9 +76,11 @@ class Game extends Component {
     this.setState({
       answer: target.value,
     });
-    console.log(score);
+
     if (target.value === 'correct') {
-      this.setState({}, () => dispatchScore(score));
+      this.setState({ gameScore: totalScore }, () => {
+        dispatchScore(totalScore);
+      });
     }
   }
 
@@ -181,10 +197,12 @@ class Game extends Component {
 }
 
 Game.propTypes = {
+  dispatchScore: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  dispatchScore: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
