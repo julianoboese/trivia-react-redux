@@ -10,7 +10,9 @@ class Game extends Component {
   state = {
     questions: [],
     currentQuestion: 0,
+    randomAnswers: [],
     answer: '',
+    intervalId: 0,
     timer: 30,
   }
 
@@ -22,21 +24,26 @@ class Game extends Component {
     const gameData = await getNewGameData(token, quantity);
     this.setState({
       questions: gameData.results,
-    }, () => this.updateTimer());
+    }, () => {
+      this.setRandomAnswers();
+      this.updateTimer();
+    });
   }
 
   updateTimer = () => {
     const ONE_SECOND = 1000;
-    setInterval(() => {
+    const intervalId = setInterval(() => {
       this.setState((prevState) => {
         if (prevState.timer > 0) {
-          return { timer: prevState.timer - 1 };
+          return { intervalId, timer: prevState.timer - 1 };
         }
       });
     }, ONE_SECOND);
   }
 
   handleAnswerClick = ({ target }) => {
+    const { intervalId } = this.state;
+    clearInterval(intervalId);
     const answerButtons = target.parentElement.children;
     const buttons = Object.values(answerButtons);
     buttons.forEach((button) => {
@@ -48,8 +55,30 @@ class Game extends Component {
     });
   }
 
-  renderAnswerButtons = (correct, incorrects) => {
-    const { answer: answered } = this.state;
+  handleNextButton = () => {
+    const answerButtons = document.getElementsByClassName('answer-button');
+    const buttons = Object.values(answerButtons);
+    buttons.forEach((button) => {
+      button.className = 'answer-button';
+    });
+    const { currentQuestion, questions } = this.state;
+    if (currentQuestion < questions.length - 1) {
+      this.setState({
+        answer: '',
+        currentQuestion: currentQuestion + 1,
+        timer: 30,
+      }, () => {
+        this.setRandomAnswers();
+        this.updateTimer();
+      });
+    }
+  }
+
+  setRandomAnswers = () => {
+    const { questions, currentQuestion } = this.state;
+    const { correct_answer: correct, incorrect_answers: incorrects,
+    } = questions[currentQuestion];
+
     const answers = [
       { status: 'correct', text: correct, testid: 'correct-answer' },
       ...incorrects.reduce((acc, curr, index) => ([
@@ -61,63 +90,58 @@ class Game extends Component {
     const MEIO = 0.5;
     const randomAnswers = answers.sort(() => Math.random() - MEIO);
 
-    const { timer } = this.state;
-    return randomAnswers.map((answer) => (
-      <button
-        key={ answer.status }
-        type="button"
-        data-testid={ answer.testid }
-        onClick={ this.handleAnswerClick }
-        value={ answer.status }
-        className="answer-button"
-        disabled={ answered !== '' || timer === 0 }
-      >
-        {answer.text}
-      </button>
-    ));
+    this.setState({ randomAnswers });
   }
 
-  renderQuestions = () => {
-    const { questions } = this.state;
+  renderQuestion = () => {
+    const { questions, currentQuestion } = this.state;
+    const { category, question } = questions[currentQuestion];
     return (
-      questions.map((questionData, index) => {
-        const {
-          correct_answer: correct, incorrect_answers: incorrects,
-          category, question, difficulty,
-        } = questionData;
-        const buttons = this.renderAnswerButtons(correct, incorrects);
-        return (
-          <div key={ `${difficulty}, ${index}` }>
-            <p data-testid="question-category">{`categoria: ${category}`}</p>
-            <p data-testid="question-text">{ question }</p>
-            <div data-testid="answer-options">
-              {buttons}
-            </div>
-          </div>
-        );
-      })
+      <div key={ question }>
+        <p data-testid="question-category">{`categoria: ${category}`}</p>
+        <p data-testid="question-text">{ question }</p>
+      </div>
     );
   }
 
-  handleNextButton = () => {
-    const { currentQuestion, questions } = this.state;
-    if (currentQuestion < questions.length - 1) {
-      this.setState({
-        answer: '',
-        currentQuestion: currentQuestion + 1,
-      });
-    }
+  renderAnswers = () => {
+    const { answer: answered, timer, randomAnswers } = this.state;
+
+    return (
+      <div data-testid="answer-options">
+        {
+          randomAnswers.map((answer) => (
+            <button
+              key={ answer.status }
+              type="button"
+              data-testid={ answer.testid }
+              onClick={ this.handleAnswerClick }
+              value={ answer.status }
+              className="answer-button"
+              disabled={ answered !== '' || timer === 0 }
+            >
+              {answer.text}
+            </button>))
+        }
+      </div>
+    );
   }
 
   render() {
-    const { currentQuestion, answer } = this.state;
+    const { questions, randomAnswers, timer, answer } = this.state;
     return (
       <>
         <Header />
         <section>
-          { this.renderQuestions()[currentQuestion] }
+          { questions.length > 0
+          && this.renderQuestion() }
+          { randomAnswers.length > 0
+          && this.renderAnswers() }
+        </section>
+        <section>
+          { timer }
           {
-            answer !== ''
+            (answer !== '' || timer === 0)
             && (
               <button
                 type="button"
