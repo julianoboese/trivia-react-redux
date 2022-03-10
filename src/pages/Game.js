@@ -50,7 +50,7 @@ class Game extends Component {
           correct_answer: correct, incorrect_answers: incorrects,
           category, question, dificult, type,
         } = questionData;
-        const buttons = this.renderAnswerButtons(correct, incorrects, type);
+        const buttons = this.renderAnswerButtons(correct, incorrects);
         return (
           <div key={ `${dificult}, ${index}` }>
             <p data-testid="question-category">{`categoria: ${category}`}</p>
