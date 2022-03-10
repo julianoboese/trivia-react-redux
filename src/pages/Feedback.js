@@ -11,8 +11,8 @@ class Feedback extends Component {
     return (
       <>
         <Header />
-        <span data-testid="feedback-total-score">{`Pontuação:${score}`}</span>
-        <span data-testid="feedback-total-question">{`Acertos:${assertions}`}</span>
+        <span data-testid="feedback-total-score">{score}</span>
+        <span data-testid="feedback-total-question">{assertions}</span>
         <span data-testid="feedback-text">
           {assertions < MIN_ASSERTIONS ? 'Could be better...' : 'Well Done!'}
         </span>
