@@ -11,11 +11,21 @@ class Feedback extends Component {
     return (
       <>
         <Header />
-        <span data-testid="feedback-total-score">{score}</span>
-        <span data-testid="feedback-total-question">{assertions}</span>
-        <span data-testid="feedback-text">
-          {assertions < MIN_ASSERTIONS ? 'Could be better...' : 'Well Done!'}
-        </span>
+        <div className="feedback-score-container">
+          Pontuação:
+          <span data-testid="feedback-total-score">
+            {score}
+          </span>
+        </div>
+        <div className="feedback-total-assertions-container">
+          Total de acertos:
+          <span data-testid="feedback-total-question">{assertions}</span>
+        </div>
+        <div className="feedback-text-container">
+          <span data-testid="feedback-text">
+            {assertions < MIN_ASSERTIONS ? 'Could be better...' : 'Well Done!'}
+          </span>
+        </div>
         <Link to="/">
           <button type="button" data-testid="btn-play-again">Play Again</button>
         </Link>

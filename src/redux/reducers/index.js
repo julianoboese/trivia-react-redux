@@ -7,7 +7,7 @@ const INITIAL_STATE = {
     difficulty: '',
     type: '',
     initialTimer: 30,
-    questionsQuantity: 5,
+    quantity: 5,
   },
   player: {
     name: '',

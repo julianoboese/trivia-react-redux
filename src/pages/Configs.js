@@ -11,7 +11,7 @@ class Configs extends Component {
     difficulty: '',
     type: '',
     initialTimerStr: '30',
-    questionsQuantityStr: '5',
+    quantityStr: '5',
   }
 
   async componentDidMount() {
@@ -27,17 +27,17 @@ class Configs extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { category, difficulty, type,
-      initialTimerStr, questionsQuantityStr } = this.state;
+      initialTimerStr, quantityStr } = this.state;
     const { saveConfigs, history } = this.props;
     const initialTimer = +initialTimerStr;
-    const questionsQuantity = +questionsQuantityStr;
-    saveConfigs({ category, difficulty, type, initialTimer, questionsQuantity });
+    const quantity = +quantityStr;
+    saveConfigs({ category, difficulty, type, initialTimer, quantity });
     history.push('/');
   }
 
   render() {
     const { categories, category, difficulty, type,
-      initialTimerStr, questionsQuantityStr } = this.state;
+      initialTimerStr, quantityStr } = this.state;
     const { handleChange, handleSubmit } = this;
     return (
       <>
@@ -103,8 +103,8 @@ class Configs extends Component {
               type="number"
               max="50"
               min="1"
-              name="questionsQuantityStr"
-              value={ questionsQuantityStr }
+              name="quantityStr"
+              value={ quantityStr }
             />
           </label>
           <button type="submit">Salvar</button>

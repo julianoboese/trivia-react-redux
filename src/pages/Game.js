@@ -19,11 +19,12 @@ class Game extends Component {
   }
 
   async componentDidMount() {
-    const { history, token, configs, questionsQuantity } = this.props;
+    const { history, token, configs } = this.props;
+    const { quantity } = configs.quantity;
     if (!token) {
       return history.push('/');
     }
-    const gameData = await getNewGameData({ token, questionsQuantity, ...configs });
+    const gameData = await getNewGameData({ token, quantity, ...configs });
     this.setState({
       questions: gameData.results,
       timer: configs.initialTimer,
@@ -205,11 +206,11 @@ Game.propTypes = {
   }).isRequired,
   token: PropTypes.string.isRequired,
   configs: PropTypes.shape({
-    category: PropTypes.number,
+    quantity: PropTypes.number,
+    category: PropTypes.string,
     difficulty: PropTypes.string,
     type: PropTypes.string,
     initialTimer: PropTypes.number,
-    questionsQuantity: PropTypes.number,
   }).isRequired,
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
@@ -220,7 +221,7 @@ const mapStateToProps = (state) => ({
   configs: state.configs,
   email: state.player.gravatarEmail,
   name: state.player.name,
-  questionsQuantity: state.player.name,
+  quantity: state.player.name,
 });
 
 const mapDispatchToProps = (dispatch) => ({
