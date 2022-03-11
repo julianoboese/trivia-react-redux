@@ -20,11 +20,10 @@ class Game extends Component {
 
   async componentDidMount() {
     const { history, token, configs } = this.props;
-    const { quantity } = configs.quantity;
     if (!token) {
       return history.push('/');
     }
-    const gameData = await getNewGameData({ token, quantity, ...configs });
+    const gameData = await getNewGameData({ token, ...configs });
     this.setState({
       questions: gameData.results,
       timer: configs.initialTimer,
