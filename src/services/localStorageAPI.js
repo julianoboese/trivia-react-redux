@@ -8,7 +8,7 @@ export const getStoredRankig = () => JSON.parse(localStorage.getItem(RANKING));
 export const saveStoredScore = (name, score, picture) => {
   const currentRanking = getStoredRankig() || [];
   const newData = { name, score, picture };
-  const newRanking = JSON.stringify([...currentRanking, newData]);
-  console.log(newRanking);
-  localStorage.setItem(RANKING, newRanking);
+  const newRanking = [...currentRanking, newData];
+  newRanking.sort(({ score: a }, { score: b }) => b - a);
+  localStorage.setItem(RANKING, JSON.stringify((newRanking)));
 };

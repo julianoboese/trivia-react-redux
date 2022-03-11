@@ -14,9 +14,8 @@ class Game extends Component {
     currentQuestion: 0,
     randomAnswers: [],
     answer: '',
-    intervalId: 0,
     gameScore: 0,
-    timer: 31,
+    timer: 30,
   }
 
   async componentDidMount() {
@@ -42,12 +41,12 @@ class Game extends Component {
 
   updateTimer = () => {
     const ONE_SECOND = 1000;
-    const intervalId = setInterval(() => {
+    this.intervalId = setInterval(() => {
       this.setState((prevState) => {
         if (prevState.timer > 0) {
-          return { intervalId, timer: prevState.timer - 1 };
+          return { timer: prevState.timer - 1 };
         }
-        clearInterval(intervalId);
+        clearInterval(this.intervalId);
       });
     }, ONE_SECOND);
   }
@@ -64,11 +63,7 @@ class Game extends Component {
     const AnswerScore = ((multiplier[difficulty] * timer) + minScore);
     const totalScore = (AnswerScore + gameScore);
 
-    const ONE_SECOND = 1000;
-    setTimeout(() => {
-      const { intervalId } = this.state;
-      clearInterval(intervalId);
-    }, ONE_SECOND);
+    clearInterval(this.intervalId);
 
     const answerButtons = target.parentElement.children;
     const buttons = Object.values(answerButtons);
