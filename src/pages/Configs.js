@@ -10,6 +10,8 @@ class Configs extends Component {
     category: '',
     difficulty: '',
     type: '',
+    initialTimerStr: '30',
+    quantityStr: '5',
   }
 
   async componentDidMount() {
@@ -24,25 +26,30 @@ class Configs extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const { category, difficulty, type } = this.state;
+    const { category, difficulty, type,
+      initialTimerStr, quantityStr } = this.state;
     const { saveConfigs, history } = this.props;
-    saveConfigs({ category, difficulty, type });
+    const initialTimer = +initialTimerStr;
+    const quantity = +quantityStr;
+    saveConfigs({ category, difficulty, type, initialTimer, quantity });
     history.push('/');
   }
 
   render() {
-    const { categories, category, difficulty, type } = this.state;
+    const { categories, category, difficulty, type,
+      initialTimerStr, quantityStr } = this.state;
+    const { handleChange, handleSubmit } = this;
     return (
       <>
         <h1 data-testid="settings-title">Configurações</h1>
-        <form onSubmit={ this.handleSubmit }>
+        <form onSubmit={ handleSubmit }>
           <label htmlFor="category">
             Categoria
             <select
               name="category"
               id="category"
               value={ category }
-              onChange={ this.handleChange }
+              onChange={ handleChange }
             >
               <option value="">Todas</option>
               {categories.length > 0 && categories.map((categ) => (
@@ -56,7 +63,7 @@ class Configs extends Component {
               name="difficulty"
               id="difficulty"
               value={ difficulty }
-              onChange={ this.handleChange }
+              onChange={ handleChange }
             >
               <option value="">Todas</option>
               <option value="easy">Fácil</option>
@@ -70,12 +77,35 @@ class Configs extends Component {
               name="type"
               id="type"
               value={ type }
-              onChange={ this.handleChange }
+              onChange={ handleChange }
             >
               <option value="">Todos</option>
               <option value="multiple">Múltipla escolha</option>
               <option value="boolean">Verdadeiro / Falso</option>
             </select>
+          </label>
+          <label htmlFor="type">
+            Tempo
+            <input
+              onChange={ handleChange }
+              type="number"
+              min="5"
+              max="60"
+              name="initialTimerStr"
+              step="5"
+              value={ initialTimerStr }
+            />
+          </label>
+          <label htmlFor="type">
+            Quantidade de questões
+            <input
+              onChange={ handleChange }
+              type="number"
+              max="50"
+              min="1"
+              name="quantityStr"
+              value={ quantityStr }
+            />
           </label>
           <button type="submit">Salvar</button>
         </form>

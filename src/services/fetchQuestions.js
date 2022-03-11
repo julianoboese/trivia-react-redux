@@ -15,7 +15,6 @@ export async function getQuestionsData({ token, quantity, category, difficulty, 
       }
       const response = await fetch(url);
       const triviaData = await response.json();
-      console.log(triviaData);
       return triviaData;
     } catch (error) {
       return error;
