@@ -216,7 +216,7 @@ Game.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  token: state.token.token,
+  token: state.token,
   configs: state.configs,
   email: state.player.gravatarEmail,
   name: state.player.name,

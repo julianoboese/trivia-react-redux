@@ -23,7 +23,7 @@ const rootReducer = (state = INITIAL_STATE, { type, payload }) => {
   case GET_TOKEN:
     return ({
       ...state,
-      token: payload.token,
+      token: payload.token.token,
       player: { ...state.player, name: payload.name, gravatarEmail: payload.email },
     });
 
