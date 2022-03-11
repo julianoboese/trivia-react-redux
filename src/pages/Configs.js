@@ -90,7 +90,7 @@ class Configs extends Component {
               onChange={ handleChange }
               type="number"
               min="5"
-              max="30"
+              max="60"
               name="initialTimerStr"
               step="5"
               value={ initialTimerStr }
