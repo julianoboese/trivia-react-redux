@@ -38,7 +38,7 @@ class Login extends Component {
           <div className="image-container" />
         </section>
         <section className="form-section">
-          <Paper elevation={ 3 } sx={ { my: 4, mx: 'auto', width: 1 / 2, py: 1, px: 4 } }>
+          <Paper elevation={ 10 } sx={ { my: 4, mx: 'auto', width: 1 / 2, py: 1, px: 4 } }>
             <form onSubmit={ this.handleSubmit }>
 
               <TextField
