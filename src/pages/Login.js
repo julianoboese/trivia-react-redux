@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Button, Paper, TextField } from '@mui/material';
 import { userLoginAction } from '../redux/actions';
+import './Login.css';
 
 class Login extends Component {
   state = {
@@ -31,38 +33,61 @@ class Login extends Component {
   render() {
     const { email, name } = this.state;
     return (
-      <>
-        <form onSubmit={ this.handleSubmit }>
-          <input
-            type="text"
-            name="name"
-            placeholder="nome"
-            value={ name }
-            onChange={ this.handleChange }
-            data-testid="input-player-name"
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="e-mail"
-            value={ email }
-            onChange={ this.handleChange }
-            data-testid="input-gravatar-email"
-          />
-          <button
-            type="submit"
-            disabled={ name.length === 0 || email.length === 0 }
-            data-testid="btn-play"
-          >
-            Play
-          </button>
+      <main>
+        <section className="image-section">
+          <div className="image-container" />
+        </section>
+        <section className="form-section">
+          <Paper elevation={ 3 } sx={ { my: 4, mx: 'auto', width: 1 / 2, py: 1, px: 4 } }>
+            <form onSubmit={ this.handleSubmit }>
 
-        </form>
-        <Link to="/config">
-          <button data-testid="btn-settings" type="button">Configurações</button>
-        </Link>
+              <TextField
+                id="outlined-basic"
+                label="Nome"
+                variant="outlined"
+                size="small"
+                name="name"
+                value={ name }
+                onChange={ this.handleChange }
+                inputProps={ { 'data-testid': 'input-player-name' } }
+              />
+              <TextField
+                className="email-input"
+                id="outlined-basic"
+                label="E-mail"
+                variant="outlined"
+                size="small"
+                name="email"
+                value={ email }
+                onChange={ this.handleChange }
+                inputProps={ { 'data-testid': 'input-gravatar-email' } }
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                color="success"
+                size="large"
+                disabled={ name.length === 0 || email.length === 0 }
+                data-testid="btn-play"
+              >
+                Play
+              </Button>
 
-      </>
+            </form>
+          </Paper>
+        </section>
+        <Button
+          component={ Link }
+          to="/config"
+          type="button"
+          variant="contained"
+          size="large"
+          data-testid="btn-settings"
+        >
+          Configurações
+        </Button>
+
+      </main>
     );
   }
 }
