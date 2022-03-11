@@ -1,20 +1,21 @@
-export async function getNewToken() {
-  try {
-    const url = 'https://opentdb.com/api_token.php?command=request';
-    const response = await fetch(url);
-    const gameToken = await response.json();
-    return gameToken;
-  } catch (error) {
-    return error;
-  }
-}
+import getNewToken from './fetchToken';
 
-export async function getQuestionsData(token, questionsQuantity) {
+export async function getQuestionsData({ token, quantity, category, difficulty, type }) {
   if (token.length > 0) {
     try {
-      const url = `https://opentdb.com/api.php?amount=${questionsQuantity}&token=${token}`;
+      let url = `https://opentdb.com/api.php?amount=${quantity}&token=${token}`;
+      if (category) {
+        url = `${url}&category=${category}`;
+      }
+      if (difficulty) {
+        url = `${url}&difficulty=${difficulty}`;
+      }
+      if (type) {
+        url = `${url}&type=${type}`;
+      }
       const response = await fetch(url);
       const triviaData = await response.json();
+      console.log(triviaData);
       return triviaData;
     } catch (error) {
       return error;
@@ -22,14 +23,18 @@ export async function getQuestionsData(token, questionsQuantity) {
   }
 }
 
-export async function getNewGameData(token, questionsQuantity) {
-  let gameData = getQuestionsData(token, questionsQuantity);
+export async function getNewGameData({ token, quantity, category, difficulty, type }) {
+  let gameData = await getQuestionsData({ token, quantity, category, difficulty, type });
   if (gameData.response_code !== 0) {
     const newToken = await getNewToken();
     try {
-      const url = `https://opentdb.com/api.php?amount=${questionsQuantity}&token=${newToken.token}`;
-      const response = await fetch(url);
-      gameData = await response.json();
+      gameData = await getQuestionsData({
+        token: newToken.token,
+        quantity,
+        category,
+        difficulty,
+        type,
+      });
     } catch (error) {
       return error;
     }

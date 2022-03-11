@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
-import { getStoredToken, saveStoredScore } from '../services/localStorageAPI';
+import { saveStoredScore } from '../services/localStorageAPI';
 import Header from '../components/Header';
 import { getNewGameData } from '../services/fetchQuestions';
 import { updateScore } from '../redux/actions';
@@ -19,10 +19,12 @@ class Game extends Component {
   }
 
   async componentDidMount() {
-    // const { token } = this.props;
-    const token = getStoredToken();
+    const { history, token, configs } = this.props;
+    if (!token) {
+      return history.push('/');
+    }
     const quantity = 5;
-    const gameData = await getNewGameData(token, quantity);
+    const gameData = await getNewGameData({ token, quantity, ...configs });
     this.setState({
       questions: gameData.results,
     }, () => {
@@ -201,11 +203,19 @@ Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  token: PropTypes.string.isRequired,
+  configs: PropTypes.shape({
+    category: PropTypes.number,
+    difficulty: PropTypes.string,
+    type: PropTypes.string,
+  }).isRequired,
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  token: state.token.token,
+  configs: state.configs,
   email: state.player.gravatarEmail,
   name: state.player.name,
 });
