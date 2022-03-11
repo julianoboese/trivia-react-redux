@@ -6,6 +6,8 @@ const INITIAL_STATE = {
     category: '',
     difficulty: '',
     type: '',
+    initialTimer: 30,
+    questionsQuantity: 5,
   },
   player: {
     name: '',
@@ -28,7 +30,7 @@ const rootReducer = (state = INITIAL_STATE, { type, payload }) => {
   case SAVE_CONFIGS:
     return ({
       ...state,
-      configs: { ...state.configs, ...payload },
+      configs: { ...payload },
     });
 
   case INCREASE_SCORE:
