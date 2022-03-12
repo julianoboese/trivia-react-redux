@@ -5,66 +5,81 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import rankingStyles from './RankingStyle';
 import { getStoredRankig } from '../services/localStorageAPI';
+
+const styles = rankingStyles;
 
 export default class Ranking extends Component {
   renderRanking = () => {
     const rankingArray = getStoredRankig();
-    const lastPodium = 3;
-    return rankingArray.map(({ name, score, picture }, index) => (
-      <>
-        <Grid xs="0" md="3" xl="4.9">
-          <CardMedia
-            component="video"
-            src="../star-unscreen.gif"
-          />
-        </Grid>
+    const lastPodium = 2;
+    const podium = ['firstBackground', 'secondBackground', 'thirdBackground'];
+    return rankingArray.map(({ name, score, picture }, index) => {
+      const isPodium = index <= lastPodium;
+      return (
         <Grid
+          container
           item
           key={ `${name}${index}` }
-          sx={ { maxWidth: 350 } }
-          xs="12"
-          md="6"
-          xl="3"
+          direction="row"
         >
-          <Card sx={ { maxWidth: 350 } }>
-            <CardMedia
-              component="img"
-              alt={ `${index + 1} place player: ${name}` }
-              data-testid="header-profile-picture"
-              sx={ { maxWidth: 100, margin: 'auto' } }
-              src={ picture }
-            />
-            <CardContent>
-              <Typography align="center">
-                {`Posição: ${index + 1} ${index < lastPodium ? 'lugar' : ''}`}
-              </Typography>
-              <Typography
-                align="center"
-                data-testid={ `player-name-${index}` }
-              >
-                { name }
-              </Typography>
-              <Typography
-                align="center"
-                data-testid={ `player-score-${index}` }
-              >
-                { `Pontuação: ${score}` }
-              </Typography>
-            </CardContent>
-          </Card>
+          <Grid
+            item
+            md="3"
+            xl="4"
+            sx={ (isPodium ? styles[podium[index]] : styles.defaultBackground) }
+          />
+          <Grid
+            item
+            xs="12"
+            md="6"
+            xl="4"
+            sx={ { margin: '50px 0' } }
+          >
+            <Card sx={ { margin: '0 20px', width: 'auto' } }>
+              <CardMedia
+                component="img"
+                alt={ `${index + 1} place player: ${name}` }
+                data-testid="header-profile-picture"
+                sx={ { margin: 'auto', maxWidth: '100px' } }
+                src={ picture }
+              />
+              <CardContent>
+                <Typography align="center">
+                  {`${index + 1} lugar`}
+                </Typography>
+                <Typography
+                  align="center"
+                  data-testid={ `player-name-${index}` }
+                >
+                  { name }
+                </Typography>
+                <Typography
+                  align="center"
+                  data-testid={ `player-score-${index}` }
+                >
+                  { `${score} pontos` }
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid
+            item
+            md="3"
+            xl="4"
+            sx={ (isPodium ? styles[podium[index]] : styles.defaultBackground) }
+          />
         </Grid>
-        <Grid xs="0" md="3" xl="4" />
-      </>
-    ));
+      );
+    });
   }
 
   render() {
     const { renderRanking } = this;
     return (
-      <Box sx={ { backgroundColor: 'black' } }>
-        <header>
+      <>
+        <Grid sx={ { backgroundColor: '#F3CE84' } }>
           <Typography
             align="center"
             component="h1"
@@ -78,11 +93,17 @@ export default class Ranking extends Component {
           <Link to="/">
             <button type="button" data-testid="btn-go-home">Play Again</button>
           </Link>
-        </header>
-        <Grid container rowSpacing="8" columnSpacing="20">
+        </Grid>
+        <Grid
+          container
+          rowSpacing="20"
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+        >
           { renderRanking() }
         </Grid>
-      </Box>
+      </>
     );
   }
 }
