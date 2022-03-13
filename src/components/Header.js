@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Box, Stack, Typography } from '@mui/material';
 
 class Header extends Component {
   render() {
@@ -9,13 +10,74 @@ class Header extends Component {
     const hash = md5(email).toString();
 
     return (
-      <div className="playerInfo">
-        <div className="pictureContainer">
-          <img alt="player" data-testid="header-profile-picture" src={ `https://www.gravatar.com/avatar/${hash}` } />
-        </div>
-        <span data-testid="header-player-name">{ name }</span>
-        <span data-testid="header-score">{score}</span>
-      </div>
+      <Stack
+        direction="row"
+        spacing={ 4 }
+        justifyContent="flex-end"
+        alignItems="center"
+        sx={ { mb: 4, py: 1, px: 4, bgcolor: 'black', color: 'white' } }
+      >
+        <Stack
+          direction="column"
+          spacing={ 1 }
+          justifyContent="flex-end"
+          alignItems="flex-end"
+        >
+          <Typography
+            variant="span"
+            component="span"
+            gutterBottom
+            data-testid="header-player-name"
+          >
+            <Box
+              sx={ { width: '100%',
+                fontWeight: 'bold',
+                fontSize: 20,
+                textAlign: 'center' } }
+            >
+              Juliano
+            </Box>
+          </Typography>
+          <Typography
+            variant="span"
+            component="span"
+            gutterBottom
+            data-testid="header-player-name"
+          >
+            <Stack
+              direction="row"
+              spacing={ 2 }
+              justifyContent="flex-end"
+              alignItems="center"
+            >
+              <Box
+                sx={ { width: '100%',
+                  fontSize: 16,
+                  textAlign: 'center' } }
+              >
+                Pontuação:
+              </Box>
+              <Box
+                sx={ { width: '100%',
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                  textAlign: 'center' } }
+              >
+                {score}
+              </Box>
+            </Stack>
+          </Typography>
+
+        </Stack>
+        <Box sx={ { lineHeight: 0 } }>
+          <img
+            alt="player"
+            data-testid="header-profile-picture"
+            src={ `https://www.gravatar.com/avatar/${hash}` }
+            style={ { borderRadius: '100%' } }
+          />
+        </Box>
+      </Stack>
     );
   }
 }
