@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Box, Button, Container, FormControl, InputLabel,
-  MenuItem, Paper, Select, Stack, Typography } from '@mui/material';
+  MenuItem, Paper, Select, Slider, Stack, Typography } from '@mui/material';
 import getCategories from '../services/fetchCategories';
 import { saveConfigsAction } from '../redux/actions';
 
@@ -92,30 +92,37 @@ class Configs extends Component {
             </Select>
           </FormControl>
         </Stack>
-        <Stack direction="row" spacing={ 4 } justifyContent="center" sx={ { my: 4 } }>
-          <label htmlFor="type">
-            Tempo
-            <input
-              onChange={ handleChange }
-              type="number"
-              min="5"
-              max="60"
+        <Stack direction="row" spacing={ 8 } justifyContent="center" sx={ { my: 4 } }>
+          <Box sx={ { width: 300 } }>
+            <Typography id="input-slider" gutterBottom>
+              Tempo
+            </Typography>
+            <Slider
+              aria-label="Temperature"
               name="initialTimerStr"
-              step="5"
               value={ initialTimerStr }
-            />
-          </label>
-          <label htmlFor="type">
-            Quantidade de questões
-            <input
+              valueLabelDisplay="auto"
+              step={ 5 }
+              marks
+              min={ 5 }
+              max={ 60 }
               onChange={ handleChange }
-              type="number"
-              max="50"
-              min="1"
+            />
+          </Box>
+          <Box sx={ { width: 300 } }>
+            <Typography id="input-slider" gutterBottom>
+              Quantidade de questões
+            </Typography>
+            <Slider
+              aria-label="Temperature"
               name="quantityStr"
               value={ quantityStr }
+              valueLabelDisplay="auto"
+              min={ 1 }
+              max={ 50 }
+              onChange={ handleChange }
             />
-          </label>
+          </Box>
         </Stack>
         <Stack direction="row" justifyContent="center" spacing={ 2 } sx={ { my: 4 } }>
           <Button
