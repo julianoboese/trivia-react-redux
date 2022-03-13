@@ -36,7 +36,7 @@ class Login extends Component {
       <Stack
         direction="column"
         spacing={ 6 }
-        sx={ { bgcolor: 'rgba(255, 166, 0, 0.795)',
+        sx={ { bgcolor: '#FFB834',
           alignItems: 'center',
           height: '100vh' } }
       >

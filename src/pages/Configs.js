@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Box, Button, Container, FormControl, InputLabel,
+  MenuItem, Paper, Select, Stack, Typography } from '@mui/material';
 import getCategories from '../services/fetchCategories';
 import { saveConfigsAction } from '../redux/actions';
 
@@ -35,55 +37,62 @@ class Configs extends Component {
     history.push('/');
   }
 
-  render() {
+  renderForm = () => {
     const { categories, category, difficulty, type,
       initialTimerStr, quantityStr } = this.state;
     const { handleChange, handleSubmit } = this;
     return (
-      <>
-        <h1 data-testid="settings-title">Configurações</h1>
-        <form onSubmit={ handleSubmit }>
-          <label htmlFor="category">
-            Categoria
-            <select
+      <form onSubmit={ handleSubmit }>
+        <Stack direction="row" spacing={ 2 } sx={ { my: 4 } }>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Categoria</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               name="category"
-              id="category"
               value={ category }
+              label="Categoria"
               onChange={ handleChange }
             >
-              <option value="">Todas</option>
+              <MenuItem value="">Todas</MenuItem>
               {categories.length > 0 && categories.map((categ) => (
-                <option value={ categ.id } key={ categ.id }>{categ.name}</option>
+                <MenuItem value={ categ.id } key={ categ.id }>{categ.name}</MenuItem>
               ))}
-            </select>
-          </label>
-          <label htmlFor="difficulty">
-            Dificuldade
-            <select
+            </Select>
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Dificuldade</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               name="difficulty"
-              id="difficulty"
               value={ difficulty }
+              label="Dificuldade"
               onChange={ handleChange }
             >
-              <option value="">Todas</option>
-              <option value="easy">Fácil</option>
-              <option value="medium">Médio</option>
-              <option value="hard">Difícil</option>
-            </select>
-          </label>
-          <label htmlFor="type">
-            Tipo
-            <select
+              <MenuItem value="">Todas</MenuItem>
+              <MenuItem value="easy">Fácil</MenuItem>
+              <MenuItem value="medium">Médio</MenuItem>
+              <MenuItem value="hard">Difícil</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Tipo</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               name="type"
-              id="type"
               value={ type }
+              label="Tipo"
               onChange={ handleChange }
             >
-              <option value="">Todos</option>
-              <option value="multiple">Múltipla escolha</option>
-              <option value="boolean">Verdadeiro / Falso</option>
-            </select>
-          </label>
+              <MenuItem value="">Todos</MenuItem>
+              <MenuItem value="multiple">Múltipla escolha</MenuItem>
+              <MenuItem value="boolean">Verdadeiro / Falso</MenuItem>
+            </Select>
+          </FormControl>
+        </Stack>
+        <Stack direction="row" spacing={ 4 } justifyContent="center" sx={ { my: 4 } }>
           <label htmlFor="type">
             Tempo
             <input
@@ -107,9 +116,47 @@ class Configs extends Component {
               value={ quantityStr }
             />
           </label>
-          <button type="submit">Salvar</button>
-        </form>
-      </>
+        </Stack>
+        <Stack direction="row" justifyContent="center" spacing={ 2 } sx={ { my: 4 } }>
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
+            color="success"
+          >
+            Salvar
+          </Button>
+        </Stack>
+      </form>
+    );
+  }
+
+  render() {
+    return (
+      <Container
+        sx={ { pt: 8,
+          bgcolor: '#FFB834',
+          minWidth: '100vw',
+          height: '100vh',
+          textAlign: 'center' } }
+      >
+        <Typography variant="h1" component="h1" gutterBottom data-testid="settings-title">
+          <Box
+            sx={ { width: '100%',
+              fontWeight: 'bold',
+              fontSize: 48,
+              textAlign: 'center' } }
+          >
+            Configurações
+          </Box>
+        </Typography>
+        <Paper
+          elevation={ 10 }
+          sx={ { my: 8, mx: 'auto', width: 0.6, py: 1, px: 4 } }
+        >
+          {this.renderForm()}
+        </Paper>
+      </Container>
     );
   }
 }
