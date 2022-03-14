@@ -19,8 +19,10 @@ class Game extends Component {
   }
 
   async componentDidMount() {
-    const { history, token, configs } = this.props;
+    const { history, configs } = this.props;
+    const { token } = this.props;
     if (!token) {
+      // token = getStoredToken();
       return history.push('/');
     }
     const gameData = await getNewGameData({ token, ...configs });
