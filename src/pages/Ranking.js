@@ -222,3 +222,5 @@ export default class Ranking extends Component {
     );
   }
 }
+
+// COLOCAR UMA LIMITAÇÃO DE PLAYER POR PÁGINAS E A POSSIBILIDADE DE VER OS QUE ESTÃO ALEM DA PRIMEIRA PÁGINA
