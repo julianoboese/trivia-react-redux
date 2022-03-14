@@ -62,16 +62,16 @@ const rankingStyles = {
   tableRow: {
     background1: {
       backgroundColor: '#FFB834',
-      color: 'black',
       TableCell: {
         color: 'black',
+        fontWeight: 'bold',
       },
     },
     background2: {
-      backgroundColor: 'black',
-      color: 'white',
+      backgroundColor: '#313131',
       TableCell: {
         color: 'white',
+        fontWeight: 'bold',
       },
     },
   },

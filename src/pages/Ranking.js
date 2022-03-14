@@ -39,7 +39,7 @@ export default class Ranking extends Component {
             <Avatar
               alt={ `${index + 1} place player: ${name} avatar` }
               src={ picture }
-              style={ { width: '4em', margin: 'auto', borderRadius: '100%', height: '4em' } }
+              style={ { width: '4em', margin: 'auto', height: '4em' } }
               align="center"
             />
           </TableCell>
@@ -73,28 +73,28 @@ export default class Ranking extends Component {
       {/* <TableCell align="center" sx={ { width: '33.5%' } } /> */}
       <TableCell
         align="center"
-        sx={ { width: '8%', color: 'white', weight: 'bold', padding: '5px',
+        sx={ { width: '10%', color: 'white', fontWeight: 'bold', fontSize: '1.5em',
         } }
       >
         Ranking
       </TableCell>
       <TableCell
         align="center"
-        sx={ { width: '8%', color: 'white', weight: 'bold',
+        sx={ { width: '10%', color: 'white', fontWeight: 'bold', fontSize: '1.5em',
         } }
       >
         Avatar
       </TableCell>
       <TableCell
         align="center"
-        sx={ { width: '10%', color: 'white', weight: 'bold',
+        sx={ { width: '10%', color: 'white', fontWeight: 'bold', fontSize: '1.5em',
         } }
       >
         Player
       </TableCell>
       <TableCell
         align="center"
-        sx={ { width: '10%', color: 'white', weight: 'bold',
+        sx={ { width: '10%', color: 'white', fontWeight: 'bold', fontSize: '1.5em',
         } }
       >
         Score
@@ -106,16 +106,21 @@ export default class Ranking extends Component {
   render() {
     const { renderRanking, renderTableHeadData } = this;
     const rankingArray = getStoredRankig();
+    // const FIVE = 5;
+    // const TEN = 10;
+    // const TWENTY = 20;
     return (
       <Grid
         container
         direction="row"
         alignItems="stretch"
-        sx={ { height: '100vh', backgroundImage: 'linear-gradient(black, black)' } }
+        sx={ {
+          backgroundImage: 'linear-gradient(black, black)',
+        } }
       >
         <Grid
           item
-          sx={ { backgroundImage: 'linear-gradient(to top, black, #FFB834)',
+          sx={ { backgroundImage: 'linear-gradient(to right, black, #FFB834)',
             border: '1px solid',
           } }
           xs={ 12 }
@@ -148,8 +153,10 @@ export default class Ranking extends Component {
         </Grid>
         <Grid
           item
-          sx={ { backgroundColor: 'black',
-            border: '1px solid' } }
+          sx={ {
+            backgroundColor: 'black',
+            border: '1px solid',
+          } }
           alignContent="center"
           xs={ 12 }
           md={ 12 }
@@ -161,17 +168,25 @@ export default class Ranking extends Component {
               backgroundImage: 'linear-gradient(to left, #FFB834, black)',
             } }
           >
-            <TableHead>
+            <TableHead sx={ { height: '112px' } }>
               { renderTableHeadData() }
             </TableHead>
             <TableBody>
               { rankingArray ? renderRanking() : 'Nenhuma partida registrada' } { /* ajustar a mensage do rnaking antes de começar uma partida */ }
             </TableBody>
+            {/* <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={ [FIVE, TEN, TWENTY] }
+                  colSpan={ 3 }
+                />
+              </TableRow>
+            </TableFooter> */}
           </Table>
         </Grid>
         <Grid
           item
-          sx={ { backgroundImage: 'linear-gradient(to top, black, #FFB834)',
+          sx={ { backgroundImage: 'linear-gradient(to left, black, #FFB834)',
             border: '1px solid',
           } }
           xs={ 12 }
@@ -180,7 +195,7 @@ export default class Ranking extends Component {
         >
           <Typography
             align="center"
-            component="h1"
+            component="h2"
             variant="h1"
             data-testid="ranking-title"
             paragraph
@@ -195,8 +210,13 @@ export default class Ranking extends Component {
           <li
             style={ {
               backgroundColor: 'black',
-              textAlign: 'center' } }
-          />
+              textAlign: 'center',
+              listStyle: 'none',
+              fontWeight: 'bold',
+              color: 'white' } }
+          >
+            LAST GAME DATA
+          </li>
         </Grid>
       </Grid>
     );
