@@ -10,16 +10,27 @@ class Login extends Component {
   state = {
     name: '',
     email: '',
+    nameChanged: false,
+    emailChanged: false,
+    isDisabled: true,
   }
 
-  // validateEmail = (email) => {
-  //   const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/igm;
-  //   return emailRegex.test(email);
-  // }
+  validateEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/igm;
+    return emailRegex.test(email);
+  }
+
+  validateLogin = () => {
+    const { name, email } = this.state;
+    const verification = (name !== '' && this.validateEmail(email));
+    return !verification;
+  }
 
   handleChange = ({ target }) => {
     const { name, value } = target;
-    this.setState({ [name]: value });
+    const secondState = `${name}Changed`;
+    this.setState(({ [name]: value, [secondState]: true }), () => this
+      .setState({ isDisabled: this.validateLogin() }));
   }
 
   handleSubmit = async (event) => {
@@ -30,8 +41,16 @@ class Login extends Component {
     history.push('/game');
   }
 
+  handleEmailErrorTxt = () => {
+    const { email, emailChanged } = this.state;
+    if (this.validateEmail(email) || !emailChanged) return '';
+    if (email === '') return 'Adicione um email';
+    return 'Email inválido';
+  }
+
   render() {
-    const { email, name } = this.state;
+    const { email, name, emailChanged, nameChanged, isDisabled } = this.state;
+    const { validateEmail, handleEmailErrorTxt } = this;
     return (
       <Stack
         direction="column"
@@ -67,6 +86,8 @@ class Login extends Component {
                 onChange={ this.handleChange }
                 sx={ { flex: 2 } }
                 inputProps={ { 'data-testid': 'input-player-name' } }
+                error={ name === '' && nameChanged }
+                helperText={ name === '' && nameChanged ? 'Um nome é necessário' : '' }
               />
               <TextField
                 id="outlined-basic"
@@ -78,13 +99,15 @@ class Login extends Component {
                 onChange={ this.handleChange }
                 sx={ { flex: 3 } }
                 inputProps={ { 'data-testid': 'input-gravatar-email' } }
+                error={ emailChanged && (email === '' || !validateEmail(email)) }
+                helperText={ handleEmailErrorTxt() }
               />
               <Button
                 type="submit"
                 variant="contained"
                 color="success"
                 size="large"
-                disabled={ name.length === 0 || email.length === 0 }
+                disabled={ isDisabled }
                 sx={ { flex: 1 } }
                 data-testid="btn-play"
               >
