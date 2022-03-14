@@ -172,7 +172,8 @@ export default class Ranking extends Component {
               { renderTableHeadData() }
             </TableHead>
             <TableBody>
-              { rankingArray ? renderRanking() : 'Nenhuma partida registrada' } { /* ajustar a mensage do rnaking antes de começar uma partida */ }
+              { rankingArray ? renderRanking() : 'Nenhuma partida registrada' }
+              { /* ajustar a mensage do rnaking antes de começar uma partida */ }
             </TableBody>
             {/* <TableFooter>
               <TableRow>
