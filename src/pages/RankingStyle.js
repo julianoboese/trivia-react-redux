@@ -59,6 +59,22 @@ const rankingStyles = {
       height: '10%',
     },
   },
+  tableRow: {
+    background1: {
+      backgroundColor: '#FFB834',
+      color: 'black',
+      TableCell: {
+        color: 'black',
+      },
+    },
+    background2: {
+      backgroundColor: 'black',
+      color: 'white',
+      TableCell: {
+        color: 'white',
+      },
+    },
+  },
 };
 
 export default rankingStyles;
