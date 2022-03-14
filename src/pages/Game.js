@@ -222,7 +222,7 @@ class Game extends Component {
             flexGrow: 1 } }
         >
           {this.renderTimer()}
-          <Box sx={ { maxWidth: 765, mx: 'auto' } }>
+          <Box sx={ { maxWidth: 1024, mx: 'auto' } }>
             <Card variant="outlined" sx={ { p: 4 } }>
               <CardContent>
                 { questions.length > 0 && this.renderQuestion() }

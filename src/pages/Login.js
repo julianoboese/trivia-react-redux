@@ -117,27 +117,28 @@ class Login extends Component {
 
           </form>
         </Paper>
-        <Button
-          component={ Link }
-          to="/config"
-          type="button"
-          variant="contained"
-          size="large"
-          data-testid="btn-settings"
-        >
-          Configurações
-        </Button>
-        <Button
-          component={ Link }
-          to="/ranking"
-          type="button"
-          variant="contained"
-          size="large"
-          data-testid="btn-settings"
-        >
-          Ranking
-        </Button>
-
+        <Stack direction="row" spacing={ 4 }>
+          <Button
+            component={ Link }
+            to="/config"
+            type="button"
+            variant="contained"
+            size="large"
+            data-testid="btn-settings"
+          >
+            Configurações
+          </Button>
+          <Button
+            component={ Link }
+            to="/ranking"
+            type="button"
+            variant="contained"
+            size="large"
+            color="secondary"
+          >
+            Ranking
+          </Button>
+        </Stack>
       </Stack>
     );
   }
