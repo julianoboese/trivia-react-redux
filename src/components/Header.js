@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Box, Stack, Typography } from '@mui/material';
+import { Avatar, Box, Stack, Typography } from '@mui/material';
 
 class Header extends Component {
   render() {
@@ -35,7 +35,7 @@ class Header extends Component {
                 fontSize: 20,
                 textAlign: 'center' } }
             >
-              Juliano
+              { name }
             </Box>
           </Typography>
           <Typography
@@ -58,6 +58,7 @@ class Header extends Component {
                 Pontuação:
               </Box>
               <Box
+                data-testid="header-score"
                 sx={ { width: '100%',
                   fontWeight: 'bold',
                   fontSize: 18,
@@ -69,14 +70,12 @@ class Header extends Component {
           </Typography>
 
         </Stack>
-        <Box sx={ { lineHeight: 0 } }>
-          <img
-            alt="player"
-            data-testid="header-profile-picture"
-            src={ `https://www.gravatar.com/avatar/${hash}` }
-            style={ { borderRadius: '100%' } }
-          />
-        </Box>
+        <Avatar
+          alt="player"
+          data-testid="header-profile-picture"
+          src={ `https://www.gravatar.com/avatar/${hash}` }
+          sx={ { width: 56, height: 56 } }
+        />
       </Stack>
     );
   }

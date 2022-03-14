@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
-import { getStoredToken, saveStoredScore } from '../services/localStorageAPI';
+import { saveStoredScore } from '../services/localStorageAPI';
 import Header from '../components/Header';
 import { getNewGameData } from '../services/fetchQuestions';
 import { updateScore } from '../redux/actions';
@@ -19,11 +19,11 @@ class Game extends Component {
   }
 
   async componentDidMount() {
-    const { configs } = this.props;
-    let { token } = this.props;
+    const { history, configs } = this.props;
+    const { token } = this.props;
     if (!token) {
-      token = getStoredToken();
-      // return history.push('/');
+      // token = getStoredToken();
+      return history.push('/');
     }
     const gameData = await getNewGameData({ token, ...configs });
     this.setState({
