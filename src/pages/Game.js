@@ -129,14 +129,20 @@ class Game extends Component {
     return (
       <Box sx={ { mb: 2 } }>
         <Typography
+          variant="span"
           sx={ { fontSize: 18, fontWeight: 'bold' } }
           color="text.secondary"
           gutterBottom
         >
-          <Box component="span" data-testid="question-text">{ question }</Box>
+          <Box data-testid="question-text">{ question }</Box>
         </Typography>
-        <Typography sx={ { fontSize: 16 } } color="text.secondary" gutterBottom>
-          <Box component="span" data-testid="question-category">
+        <Typography
+          variant="span"
+          sx={ { fontSize: 16 } }
+          color="text.secondary"
+          gutterBottom
+        >
+          <Box data-testid="question-category">
             {`Categoria: ${category}`}
           </Box>
         </Typography>
