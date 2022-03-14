@@ -15,7 +15,7 @@ class Header extends Component {
         spacing={ 4 }
         justifyContent="flex-end"
         alignItems="center"
-        sx={ { mb: 4, py: 1, px: 4, bgcolor: 'black', color: 'white' } }
+        sx={ { py: 1, px: 4, bgcolor: 'black', color: 'white' } }
       >
         <Stack
           direction="column"
@@ -72,9 +72,9 @@ class Header extends Component {
         </Stack>
         <Avatar
           alt="player"
-          data-testid="header-profile-picture"
           src={ `https://www.gravatar.com/avatar/${hash}` }
           sx={ { width: 56, height: 56 } }
+          imgProps={ { 'data-testid': 'header-profile-picture' } }
         />
       </Stack>
     );
