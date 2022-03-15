@@ -133,7 +133,6 @@ class Login extends Component {
           type="button"
           variant="contained"
           size="large"
-          data-testid="btn-settings"
         >
           Ranking
         </Button>

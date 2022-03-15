@@ -9,6 +9,8 @@ import Header from '../components/Header';
 import { getNewGameData } from '../services/fetchQuestions';
 import { updateScore } from '../redux/actions';
 import './Game.css';
+import Questions from '../components/Questions';
+import Answers from '../components/Answers';
 
 class Game extends Component {
   state = {
@@ -25,7 +27,7 @@ class Game extends Component {
     let { token } = this.props;
     if (!token) {
       token = getStoredToken();
-      // return history.push('/');
+      // return history.push('/'); essa linha deve ser retomada ao acabar a refatoração da pagina Game (está sevindo apenas para não ter que relogar sempre que a página atualiza dentro da pagina Game)
     }
     const gameData = await getNewGameData({ token, ...configs });
     this.setState({
@@ -123,60 +125,6 @@ class Game extends Component {
     this.setState({ randomAnswers });
   }
 
-  renderQuestion = () => {
-    const { questions, currentQuestion } = this.state;
-    const { category, question } = questions[currentQuestion];
-    return (
-      <Box sx={ { mb: 2 } }>
-        <Typography
-          variant="span"
-          sx={ { fontSize: 18, fontWeight: 'bold' } }
-          color="text.secondary"
-          gutterBottom
-        >
-          <Box data-testid="question-text">{ question }</Box>
-        </Typography>
-        <Typography
-          variant="span"
-          sx={ { fontSize: 16 } }
-          color="text.secondary"
-          gutterBottom
-        >
-          <Box data-testid="question-category">
-            {`Categoria: ${category}`}
-          </Box>
-        </Typography>
-      </Box>
-    );
-  }
-
-  renderAnswers = () => {
-    const { answer: answered, timer, randomAnswers } = this.state;
-    return (
-      <Stack
-        direction="row"
-        justifyContent="center"
-        data-testid="answer-options"
-        sx={ { mx: 'auto' } }
-      >
-        {randomAnswers.map((answer) => (
-          <Button
-            key={ answer.status }
-            type="button"
-            variant="outlined"
-            data-testid={ answer.testid }
-            onClick={ this.handleAnswerClick }
-            value={ answer.status }
-            className="answer-button"
-            disabled={ answered !== '' || timer === 0 }
-            sx={ { mx: 2 } }
-          >
-            {answer.text}
-          </Button>))}
-      </Stack>
-    );
-  }
-
   renderTimer = () => {
     const { timer } = this.state;
     const { configs } = this.props;
@@ -207,8 +155,29 @@ class Game extends Component {
     );
   }
 
+  renderGameSection = () => {
+    const { answer, currentQuestion, questions, randomAnswers, timer } = this.state;
+    return (
+      <Box sx={ { maxWidth: 765, mx: 'auto' } }>
+        <Card variant="outlined" sx={ { p: 4 } }>
+          <CardContent>
+            <Questions questions={ questions } currentQuestion={ currentQuestion } />
+          </CardContent>
+          <CardActions>
+            <Answers
+              answer={ answer }
+              randomAnswers={ randomAnswers }
+              timer={ timer }
+              handleAnswerClick={ this.handleAnswerClick }
+            />
+          </CardActions>
+        </Card>
+      </Box>
+    );
+  }
+
   render() {
-    const { questions, randomAnswers, timer, answer } = this.state;
+    const { timer, answer } = this.state;
     return (
       <Stack direction="column" sx={ { height: '100vh' } }>
         <Header />
@@ -222,16 +191,7 @@ class Game extends Component {
             flexGrow: 1 } }
         >
           {this.renderTimer()}
-          <Box sx={ { maxWidth: 765, mx: 'auto' } }>
-            <Card variant="outlined" sx={ { p: 4 } }>
-              <CardContent>
-                { questions.length > 0 && this.renderQuestion() }
-              </CardContent>
-              <CardActions>
-                { randomAnswers.length > 0 && this.renderAnswers() }
-              </CardActions>
-            </Card>
-          </Box>
+          {this.renderGameSection()}
           <Box sx={ { mx: 'auto', my: 6 } }>
             {(answer !== '' || timer === 0)
             && (
