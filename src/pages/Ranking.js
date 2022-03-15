@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import { Avatar, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-import { getStoredRankig } from '../services/localStorageAPI';
+import { Avatar, Box, Button, Paper, Table,
+  TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { getStoredRanking } from '../services/localStorageAPI';
 import rankingStyles from './RankingStyle';
+import triviaLogo from '../assets/images/trivia-logo.gif';
 
 const sStyles = rankingStyles;
 const { background2, background1 } = sStyles.tableRow;
@@ -14,7 +16,7 @@ const podium = [sStyles.firstPlace, sStyles.secondPlace,
 
 export default class Ranking extends Component {
   renderRanking = () => {
-    const rankingArray = getStoredRankig();
+    const rankingArray = getStoredRanking();
     return rankingArray.map(({ name, score, picture }, index) => {
       const isPodium = index <= LAST_PODIUM;
       const striped = (index % 2);
@@ -39,7 +41,7 @@ export default class Ranking extends Component {
             <Avatar
               alt={ `${index + 1} place player: ${name} avatar` }
               src={ picture }
-              style={ { width: '4em', margin: 'auto', height: '4em' } }
+              style={ { width: '3.5em', margin: 'auto', height: '3.5em' } }
               align="center"
             />
           </TableCell>
@@ -63,49 +65,35 @@ export default class Ranking extends Component {
     });
   }
 
-  renderTableHeadData = () => (
-    <TableRow
-      sx={ {
-        backgroundImage: 'linear-gradient( black, black)',
-        padding: '5px',
-      } }
-    >
-      {/* <TableCell align="center" sx={ { width: '33.5%' } } /> */}
-      <TableCell
-        align="center"
-        sx={ { width: '10%', color: 'white', fontWeight: 'bold', fontSize: '1.5em',
+  renderTableHeadData = () => {
+    const columns = ['Ranking', 'Avatar', 'Player', 'Score'];
+    return (
+      <TableRow
+        sx={ {
+          backgroundColor: 'black',
+          padding: '5px',
         } }
       >
-        Ranking
-      </TableCell>
-      <TableCell
-        align="center"
-        sx={ { width: '10%', color: 'white', fontWeight: 'bold', fontSize: '1.5em',
-        } }
-      >
-        Avatar
-      </TableCell>
-      <TableCell
-        align="center"
-        sx={ { width: '10%', color: 'white', fontWeight: 'bold', fontSize: '1.5em',
-        } }
-      >
-        Player
-      </TableCell>
-      <TableCell
-        align="center"
-        sx={ { width: '10%', color: 'white', fontWeight: 'bold', fontSize: '1.5em',
-        } }
-      >
-        Score
-      </TableCell>
-      {/* <TableCell align="center" sx={ { width: '33.5' } } /> */}
-    </TableRow>
-  )
+        {/* <TableCell align="center" sx={ { width: '33.5%' } } /> */}
+        {columns.map((column, index) => (
+          <TableCell
+            key={ index }
+            align="center"
+            sx={ { width: '10%',
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: '1.5em' } }
+          >
+            {column}
+          </TableCell>))}
+        {/* <TableCell align="center" sx={ { width: '33.5' } } /> */}
+      </TableRow>
+    );
+  }
 
   render() {
     const { renderRanking, renderTableHeadData } = this;
-    const rankingArray = getStoredRankig();
+    const rankingArray = getStoredRanking();
     // const FIVE = 5;
     // const TEN = 10;
     // const TWENTY = 20;
@@ -114,114 +102,125 @@ export default class Ranking extends Component {
         container
         direction="row"
         alignItems="stretch"
-        sx={ {
-          backgroundImage: 'linear-gradient(black, black)',
-        } }
+        sx={ { backgroundColor: 'black' } }
       >
         <Grid
           item
-          sx={ { backgroundImage: 'linear-gradient(to right, black, #FFB834)',
-            border: '1px solid',
-          } }
-          xs={ 12 }
-          md={ 12 }
-          xl={ 3 }
+          xs={ 2 }
+        >
+          <Box
+            component="img"
+            sx={ {
+              mt: 1.7,
+              ml: 4,
+              maxHeight: '75px',
+            } }
+            alt="Logo do trivia"
+            src={ triviaLogo }
+          />
+        </Grid>
+        <Grid
+          item
+          xs={ 8 }
         >
           <Typography
             align="center"
-            component="h1"
             variant="h1"
             data-testid="ranking-title"
             paragraph
             sx={ {
+              m: 0,
+              p: 3,
               backgroundColor: 'black',
+              fontSize: 46,
               fontWeight: 'bold',
               color: 'white',
             } }
           >
             RANKING
           </Typography>
-          <nav
-            style={ {
-              backgroundColor: 'black',
-              textAlign: 'center' } }
+        </Grid>
+        <Grid
+          item
+          sx={ { backgroundImage: 'linear-gradient(to right, black, #FFB834)' } }
+          xs={ 12 }
+          md={ 12 }
+          xl={ 3 }
+        >
+          <Paper
+            sx={ {
+              m: 4,
+              textAlign: 'center',
+            } }
           >
-            <Link to="/">
-              <button type="button" data-testid="btn-go-home">Play Again</button>
-            </Link>
-          </nav>
+            <Button
+              component={ Link }
+              to="/"
+              type="button"
+              variant="contained"
+              color="success"
+              size="large"
+              data-testid="btn-go-home"
+              sx={ { m: 2 } }
+            >
+              Play Again
+            </Button>
+          </Paper>
         </Grid>
         <Grid
           item
           sx={ {
-            backgroundColor: 'black',
-            border: '1px solid',
-          } }
+            backgroundColor: '#FFB834' } }
           alignContent="center"
           xs={ 12 }
           md={ 12 }
           xl={ 6 }
         >
-          <Table
-            aria-label="Ranking"
-            sx={ {
-              backgroundImage: 'linear-gradient(to left, #FFB834, black)',
-            } }
-          >
-            <TableHead sx={ { height: '112px' } }>
-              { renderTableHeadData() }
-            </TableHead>
-            <TableBody>
-              { rankingArray ? renderRanking() : 'Nenhuma partida registrada' }
-              { /* ajustar a mensage do rnaking antes de começar uma partida */ }
-            </TableBody>
-            {/* <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={ [FIVE, TEN, TWENTY] }
-                  colSpan={ 3 }
-                />
-              </TableRow>
-            </TableFooter> */}
-          </Table>
+          <Paper elevation={ 12 } sx={ { mt: 4, p: 1 } }>
+            <Table
+              aria-label="Ranking"
+            >
+              <TableHead sx={ { height: '80px' } }>
+                { renderTableHeadData() }
+              </TableHead>
+              <TableBody>
+                { rankingArray ? renderRanking() : 'Nenhuma partida registrada' }
+                { /* ajustar a mensagem do ranking antes de começar uma partida */ }
+              </TableBody>
+              {/* <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    rowsPerPageOptions={ [FIVE, TEN, TWENTY] }
+                    colSpan={ 3 }
+                  />
+                </TableRow>
+              </TableFooter> */}
+            </Table>
+          </Paper>
         </Grid>
         <Grid
           item
-          sx={ { backgroundImage: 'linear-gradient(to left, black, #FFB834)',
-            border: '1px solid',
-          } }
+          sx={ { backgroundImage: 'linear-gradient(to left, black, #FFB834)' } }
           xs={ 12 }
           md={ 12 }
           xl={ 3 }
         >
-          <Typography
-            align="center"
-            component="h2"
-            variant="h1"
-            data-testid="ranking-title"
-            paragraph
-            sx={ {
-              backgroundColor: 'black',
-              fontWeight: 'bold',
-              color: 'white',
-            } }
-          >
-            RANKING
-          </Typography>
-          <li
-            style={ {
-              backgroundColor: 'black',
-              textAlign: 'center',
-              listStyle: 'none',
-              fontWeight: 'bold',
-              color: 'white' } }
-          >
-            LAST GAME DATA
-          </li>
+          <Paper sx={ { m: 4, p: 1 } }>
+            <Box
+              sx={ {
+                backgroundColor: 'black',
+                textAlign: 'center',
+                listStyle: 'none',
+                fontWeight: 'bold',
+                color: 'white' } }
+            >
+              LAST GAME DATA
+            </Box>
+          </Paper>
         </Grid>
       </Grid>
     );
   }
 }
 
-// COLOCAR UMA LIMITAÇÃO DE PLAYER POR PÁGINAS E A POSSIBILIDADE DE VER OS QUE ESTÃO ALEM DA PRIMEIRA PÁGINA
+// COLOCAR UMA LIMITAÇÃO DE PLAYER POR PÁGINAS E A POSSIBILIDADE DE VER OS QUE ESTÃO ALÉM DA PRIMEIRA PÁGINA

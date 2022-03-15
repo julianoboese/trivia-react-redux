@@ -147,7 +147,7 @@ class Configs extends Component {
           height: '100vh',
           textAlign: 'center' } }
       >
-        <Typography variant="h1" component="h1" gutterBottom data-testid="settings-title">
+        <Typography variant="h1" gutterBottom data-testid="settings-title">
           <Box
             sx={ { width: '100%',
               fontWeight: 'bold',

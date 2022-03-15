@@ -1,4 +1,4 @@
-import firtsPlaceImg from '../star-unscreen.gif';
+import firstPlaceImg from '../star-unscreen.gif';
 import secondPlaceImg from '../mushroom-jumping-gif-unscreen.gif';
 import thirdPlaceImg from '../yoshi_coin.gif';
 import noPodiumImg from '../mario-coin-unscreen.gif';
@@ -13,22 +13,22 @@ const rankingStyles = {
       backgroundPosition: 'center',
     },
     img: {
-      maxHeight: '60px',
-      height: '5%',
+      maxHeight: '40px',
+      height: '4%',
     },
   },
   firstPlace: {
-    imageSrc: firtsPlaceImg,
+    imageSrc: firstPlaceImg,
     background: {
-      backgroundImage: `url(${firtsPlaceImg})`,
+      backgroundImage: `url(${firstPlaceImg})`,
       backgroundRepeat: 'repeat-x',
       backgroundSize: '50% 65%',
       backgroundPosition: 'center',
       backgroundColor: 'black',
     },
     img: {
-      maxHeight: '120px',
-      height: '10%',
+      maxHeight: '80px',
+      height: '8%',
     },
   },
   secondPlace: {
@@ -41,8 +41,8 @@ const rankingStyles = {
       backgroundColor: '#E0E0E0',
     },
     img: {
-      maxHeight: '120px',
-      height: '10%',
+      maxHeight: '80px',
+      height: '8%',
     },
   },
   thirdPlace: {
@@ -55,13 +55,13 @@ const rankingStyles = {
       backgroundColor: '#EB9F08',
     },
     img: {
-      maxHeight: '120px',
-      height: '10%',
+      maxHeight: '80px',
+      height: '8%',
     },
   },
   tableRow: {
     background1: {
-      backgroundColor: '#FFB834',
+      backgroundColor: '#F2D296',
       TableCell: {
         color: 'black',
         fontWeight: 'bold',
