@@ -35,11 +35,16 @@ class Feedback extends Component {
                 {assertions < MIN_ASSERTIONS ? 'Could be better...' : 'Well Done!'}
               </Box>
             </Typography>
-            <Box component="div" gutterBottom data-testid="feedback-text" sx={ { m: 2 } }>
+            <Box
+              component="div"
+              gutterBottom
+              sx={ { m: 2 } }
+            >
               Pontuação:
               { ' ' }
               <Typography
                 variant="span"
+                data-testid="feedback-total-score"
                 sx={ { width: '100%',
                   fontWeight: 'bold',
                   fontSize: 18,
@@ -48,11 +53,16 @@ class Feedback extends Component {
                 {score}
               </Typography>
             </Box>
-            <Box component="div" gutterBottom data-testid="feedback-text" sx={ { m: 2 } }>
+            <Box
+              component="div"
+              gutterBottom
+              sx={ { m: 2 } }
+            >
               Total de acertos:
               { ' ' }
               <Typography
                 variant="span"
+                data-testid="feedback-total-question"
                 sx={ { width: '100%',
                   fontWeight: 'bold',
                   fontSize: 18,
