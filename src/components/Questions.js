@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Typography } from '@mui/material';
 
-class Questions extends Component {
+class Questions extends PureComponent {
   render() {
     const { questions, currentQuestion } = this.props;
     if (questions.length > 0) {
