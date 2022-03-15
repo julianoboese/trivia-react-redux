@@ -23,8 +23,9 @@ class Game extends Component {
   }
 
   async componentDidMount() {
-    const { configs } = this.props;
+    const { configs, dispatchScore } = this.props;
     let { token } = this.props;
+    dispatchScore(0);
     if (!token) {
       token = getStoredToken();
       // return history.push('/'); essa linha deve ser retomada ao acabar a refatoração da pagina Game (está sevindo apenas para não ter que relogar sempre que a página atualiza dentro da pagina Game)
