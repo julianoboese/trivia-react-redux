@@ -38,6 +38,7 @@ Answers.propTypes = {
   randomAnswers: PropTypes.arrayOf(PropTypes.object).isRequired,
   timer: PropTypes.number.isRequired,
   answer: PropTypes.string.isRequired,
+  handleAnswerClick: PropTypes.func.isRequired,
 };
 
 export default Answers;

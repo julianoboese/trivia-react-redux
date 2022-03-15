@@ -87,7 +87,7 @@ class Game extends Component {
       button.style.border = '1px solid rgba(25, 118, 210, 0.5)';
     });
     const { currentQuestion, questions } = this.state;
-    const { configs } = this.props;
+    const { configs, history } = this.props;
     if (currentQuestion < questions.length - 1) {
       this.setState({
         answer: '',
@@ -98,19 +98,12 @@ class Game extends Component {
         this.updateTimer();
       });
     } else {
-      const { history } = this.props;
-      this.setState({
-        answer: '',
-        currentQuestion: 0,
-        timer: configs.initialTimer,
-      }, () => {
-        history.push('/feedback');
-      });
+      history.push('/feedback');
     }
   }
 
   setRandomAnswers = () => {
-    const { questions, currentQuestion } = this.state;
+    const { currentQuestion, questions } = this.state;
     const { correct_answer: correct, incorrect_answers: incorrects,
     } = questions[currentQuestion];
 
@@ -135,13 +128,13 @@ class Game extends Component {
         <CircularProgress variant="determinate" value={ countdownEquation } />
         <Box
           sx={ { top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-            position: 'absolute',
-            display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center' } }
+            bottom: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            left: 0,
+            position: 'absolute',
+            right: 0 } }
         >
           <Typography
             variant="caption"
