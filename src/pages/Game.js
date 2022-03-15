@@ -7,7 +7,7 @@ import { Box, Button, Card, CardActions, CardContent,
 import { getStoredToken, saveStoredScore } from '../services/localStorageAPI';
 import Header from '../components/Header';
 import { getNewGameData } from '../services/fetchQuestions';
-import { updateScore } from '../redux/actions';
+import { updateScoreAction, resetScoreAction } from '../redux/actions';
 import Questions from '../components/Questions';
 import Answers from '../components/Answers';
 
@@ -22,9 +22,9 @@ class Game extends Component {
   }
 
   async componentDidMount() {
-    const { configs, dispatchScore } = this.props;
+    const { configs, dispatchResetScore } = this.props;
     let { token } = this.props;
-    dispatchScore(0);
+    dispatchResetScore();
     if (!token) {
       token = getStoredToken();
       // return history.push('/'); essa linha deve ser retomada ao acabar a refatoração da pagina Game (está sevindo apenas para não ter que relogar sempre que a página atualiza dentro da pagina Game)
@@ -206,6 +206,7 @@ class Game extends Component {
 
 Game.propTypes = {
   dispatchScore: PropTypes.func.isRequired,
+  dispatchResetScore: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
@@ -230,7 +231,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchScore: (score) => dispatch(updateScore(score)),
+  dispatchScore: (score) => dispatch(updateScoreAction(score)),
+  dispatchResetScore: () => dispatch(resetScoreAction()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
