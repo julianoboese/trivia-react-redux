@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 import { Button, Stack } from '@mui/material';
 
 class Answers extends Component {
+  shouldComponentUpdate(nextProps) {
+    const { answer, randomAnswers } = this.props;
+    return ((answer !== nextProps.answer)
+    || randomAnswers !== nextProps.randomAnswers
+    || nextProps.timer === 0);
+  }
+
   render() {
     const { answer: answered, handleAnswerClick, randomAnswers, timer } = this.props;
     if (randomAnswers.length > 0) {
