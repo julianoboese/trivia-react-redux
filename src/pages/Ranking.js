@@ -28,7 +28,6 @@ export default class Ranking extends Component {
           key={ `${name}${index}` }
           sx={ rowStyle }
         >
-          {/* <TableCell align="center" sx={ { width: '33.5%' } } /> */}
           <TableCell align="center" sx={ cellStyle }>
             <img
               alt={ `${index + 1} place icon` }
@@ -59,7 +58,6 @@ export default class Ranking extends Component {
           >
             { `${score} points` }
           </TableCell>
-          {/* <TableCell align="center" sx={ { width: '33.5%' } } /> */}
         </TableRow>
       );
     });
@@ -74,7 +72,6 @@ export default class Ranking extends Component {
           padding: '5px',
         } }
       >
-        {/* <TableCell align="center" sx={ { width: '33.5%' } } /> */}
         {columns.map((column, index) => (
           <TableCell
             key={ index }
@@ -86,7 +83,6 @@ export default class Ranking extends Component {
           >
             {column}
           </TableCell>))}
-        {/* <TableCell align="center" sx={ { width: '33.5' } } /> */}
       </TableRow>
     );
   }
