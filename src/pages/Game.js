@@ -8,7 +8,6 @@ import { getStoredToken, saveStoredScore } from '../services/localStorageAPI';
 import Header from '../components/Header';
 import { getNewGameData } from '../services/fetchQuestions';
 import { updateScore } from '../redux/actions';
-import './Game.css';
 import Questions from '../components/Questions';
 import Answers from '../components/Answers';
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Stack } from '@mui/material';
+import sanitizeHtml from 'sanitize-html';
 
 class Answers extends Component {
   shouldComponentUpdate(nextProps) {
@@ -12,6 +13,7 @@ class Answers extends Component {
 
   render() {
     const { answer: answered, handleAnswerClick, randomAnswers, timer } = this.props;
+    const sanitizedAnswersTxt = randomAnswers.map((answer) => sanitizeHtml(answer.text));
     if (randomAnswers.length > 0) {
       return (
         <Stack
@@ -20,7 +22,7 @@ class Answers extends Component {
           data-testid="answer-options"
           sx={ { mx: 'auto' } }
         >
-          {randomAnswers.map((answer) => (
+          {randomAnswers.map((answer, index) => (
             <Button
               key={ answer.status }
               type="button"
@@ -32,7 +34,7 @@ class Answers extends Component {
               disabled={ answered !== '' || timer === 0 }
               sx={ { mx: 2 } }
             >
-              {answer.text}
+              {sanitizedAnswersTxt[index]}
             </Button>))}
         </Stack>
       );
