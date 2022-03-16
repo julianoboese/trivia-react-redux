@@ -44,8 +44,8 @@ class Login extends Component {
   handleEmailErrorTxt = () => {
     const { email, emailChanged } = this.state;
     if (this.validateEmail(email) || !emailChanged) return '';
-    if (email === '') return 'Adicione um email';
-    return 'Email inválido';
+    if (email === '') return 'Please insert an email';
+    return 'Invalid email';
   }
 
   render() {
@@ -78,7 +78,7 @@ class Login extends Component {
             <Stack direction="row" spacing={ 2 } sx={ { my: 4 } }>
               <TextField
                 id="outlined-basic"
-                label="Nome"
+                label="Name"
                 variant="outlined"
                 size="small"
                 name="name"
@@ -87,7 +87,7 @@ class Login extends Component {
                 sx={ { flex: 2 } }
                 inputProps={ { 'data-testid': 'input-player-name' } }
                 error={ name === '' && nameChanged }
-                helperText={ name === '' && nameChanged ? 'Um nome é necessário' : '' }
+                helperText={ name === '' && nameChanged ? 'Please insert a name' : '' }
               />
               <TextField
                 id="outlined-basic"
@@ -126,7 +126,7 @@ class Login extends Component {
             size="large"
             data-testid="btn-settings"
           >
-            Configurações
+            Settings
           </Button>
           <Button
             component={ Link }

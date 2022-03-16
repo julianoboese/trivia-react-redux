@@ -26,7 +26,7 @@ class Questions extends PureComponent {
             gutterBottom
           >
             <Box data-testid="question-category">
-              {`Categoria: ${category}`}
+              {`Category: ${category}`}
             </Box>
           </Typography>
         </Box>

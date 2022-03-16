@@ -17,16 +17,24 @@ const podium = [sStyles.firstPlace, sStyles.secondPlace,
 export default class Ranking extends Component {
   renderRanking = () => {
     const rankingArray = getStoredRanking();
-    return rankingArray.map(({ name, score, picture }, index) => {
+    const lastMatch = [...rankingArray]
+      .sort(({ date: { id: a } }, { date: { id: b } }) => b - a)[0];
+
+    return rankingArray.map(({ name, score, picture, date }, index) => {
       const isPodium = index <= LAST_PODIUM;
       const striped = (index % 2);
       const rowStyle = striped ? background2 : background1;
       const cellStyle = rowStyle.TableCell;
       const currStyle = isPodium ? podium[index] : podium[3];
+      const highlighter = lastMatch.date.id === date.id
+        ? ['5', 'red']
+        : [0, ''];
       return (
         <TableRow
           key={ `${name}${index}` }
-          sx={ rowStyle }
+          sx={ { ...rowStyle,
+            border: +highlighter[0],
+            borderBlockColor: highlighter[1] } }
         >
           <TableCell align="center" sx={ cellStyle }>
             <img

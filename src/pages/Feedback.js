@@ -40,7 +40,7 @@ class Feedback extends Component {
               gutterBottom
               sx={ { m: 2 } }
             >
-              Pontuação:
+              Score:
               { ' ' }
               <Typography
                 variant="span"
@@ -58,7 +58,7 @@ class Feedback extends Component {
               gutterBottom
               sx={ { m: 2 } }
             >
-              Total de acertos:
+              Correct answers:
               { ' ' }
               <Typography
                 variant="span"
