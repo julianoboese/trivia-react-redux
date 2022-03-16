@@ -171,7 +171,8 @@ class Game extends Component {
   }
 
   render() {
-    const { timer, answer } = this.state;
+    const { timer, answer, currentQuestion } = this.state;
+    const { configs: { quantity } } = this.props;
     return (
       <Stack direction="column" sx={ { height: '100vh' } }>
         <Header />
@@ -195,7 +196,7 @@ class Game extends Component {
                 onClick={ this.handleNextButton }
                 data-testid="btn-next"
               >
-                Next
+                { currentQuestion === (quantity - 1) ? 'Finish' : 'Next' }
               </Button>
             )}
           </Box>
