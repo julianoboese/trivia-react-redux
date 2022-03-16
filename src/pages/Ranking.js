@@ -17,7 +17,7 @@ const podium = [sStyles.firstPlace, sStyles.secondPlace,
 
 export default class Ranking extends Component {
   renderRanking = () => {
-    const rankingArray = getStoredRanking();
+    const rankingArray = getStoredRanking() || [];
     const lastMatch = [...rankingArray]
       .sort(({ date: { id: a } }, { date: { id: b } }) => b - a)[0];
 
@@ -99,7 +99,7 @@ export default class Ranking extends Component {
 
   render() {
     const { renderRanking, renderTableHeadData } = this;
-    const rankingArray = getStoredRanking();
+    const rankingArray = getStoredRanking() || [];
     const lastGameData = [...rankingArray]
       .sort(({ date: { id: a } }, { date: { id: b } }) => b - a)[0];
     // const FIVE = 5;
@@ -173,7 +173,7 @@ export default class Ranking extends Component {
               data-testid="btn-go-home"
               sx={ { m: 2 } }
             >
-              { rankingArray ? 'Play Again' : 'Play' }
+              { rankingArray.length > 0 ? 'Play Again' : 'Play' }
             </Button>
           </Paper>
         </Grid>
@@ -194,7 +194,7 @@ export default class Ranking extends Component {
                 { renderTableHeadData() }
               </TableHead>
               <TableBody>
-                { rankingArray ? renderRanking() : 'Nenhuma partida registrada' }
+                { rankingArray.length > 0 ? renderRanking() : 'No match found' }
                 { /* ajustar a mensagem do ranking antes de começar uma partida */ }
               </TableBody>
               {/* <TableFooter>
@@ -226,9 +226,9 @@ export default class Ranking extends Component {
             >
               LAST GAME DATA
             </Box>
-            { rankingArray
+            { rankingArray.length > 0
               ? (<LastGameDisplayer lastGameData={ lastGameData } />)
-              : 'Nenhuma partida registrada' }
+              : 'No match found' }
           </Paper>
         </Grid>
       </Grid>

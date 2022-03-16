@@ -18,22 +18,22 @@ export default class LastGameDisplayer extends PureComponent {
   render() {
     const { questionIndex } = this.state;
     const { lastGameData } = this.props;
-    const { name, questions, picture, score } = lastGameData;
-
-    const correctQuestions = questions.filter(({ answered }) => answered === 'correct');
-    const incorrectQuestions = questions
-      .filter(({ answered }) => answered === 'incorrect');
-
-    const currentQuestion = questions[+questionIndex];
-    const { correct_answer: correct, incorrect_answers: incorrects,
-    } = currentQuestion;
-    const answers = [
-      { status: 'correct', text: correct },
-      ...incorrects.map((answer, index) => (
-        { status: `wrong_${index}`, text: answer }
-      )),
-    ];
     if (lastGameData) {
+      const { name, questions, picture, score } = lastGameData;
+      const correctQuestions = questions.filter(({ answered }) => answered === 'correct');
+      const incorrectQuestions = questions
+        .filter(({ answered }) => answered === 'incorrect');
+
+      const currentQuestion = questions[+questionIndex];
+      const { correct_answer: correct, incorrect_answers: incorrects,
+      } = currentQuestion;
+      const answers = [
+        { status: 'correct', text: correct },
+        ...incorrects.map((answer, index) => (
+          { status: `wrong_${index}`, text: answer }
+        )),
+      ];
+
       return (
         <Card sx={ { maxWidth: '100%' } }>
           <CardContent sx={ { textAlign: 'center' } }>
@@ -80,7 +80,7 @@ export default class LastGameDisplayer extends PureComponent {
                   key={ text }
                   sx={ { color: status === 'correct' ? 'green' : 'black' } }
                 >
-                  {text}
+                  {sanitizeHtml(text)}
                 </Typography>
               )) }
             </CardContent>
