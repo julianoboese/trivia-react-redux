@@ -24,7 +24,7 @@ class Header extends Component {
               fontSize: 16,
               textAlign: 'center' } }
           >
-            Pontuação:
+            Score:
           </Box>
           <Box
             data-testid="header-score"

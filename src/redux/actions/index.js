@@ -3,6 +3,7 @@ import getNewToken from '../../services/fetchToken';
 export const GET_TOKEN = 'GET_TOKEN';
 export const SAVE_CONFIGS = 'SAVE_CONFIGS';
 export const INCREASE_SCORE = 'INCREASE_SCORE';
+export const RESET_SCORE = 'RESET_SCORE';
 // export const SAVE_SCORE = 'SAVESCORE';
 
 export const userLoginAction = (name, email) => async (dispatch) => {
@@ -16,9 +17,13 @@ export const saveConfigsAction = (configs) => ({
   payload: configs,
 });
 
-export const updateScore = (score = 0) => ({
+export const updateScoreAction = (score = 0) => ({
   type: INCREASE_SCORE,
   payload: {
     score,
   },
+});
+
+export const resetScoreAction = () => ({
+  type: RESET_SCORE,
 });

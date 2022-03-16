@@ -1,4 +1,4 @@
-import { GET_TOKEN, INCREASE_SCORE, SAVE_CONFIGS } from '../actions';
+import { GET_TOKEN, INCREASE_SCORE, RESET_SCORE, SAVE_CONFIGS } from '../actions';
 
 const INITIAL_STATE = {
   token: '',
@@ -42,6 +42,16 @@ const rootReducer = (state = INITIAL_STATE, { type, payload }) => {
         score: (+payload.score),
       },
     });
+  case RESET_SCORE:
+    return ({
+      ...state,
+      player: {
+        ...state.player,
+        assertions: 0,
+        score: 0,
+      },
+    });
+    // coloquei um novo caso para resetar os pontos do placar e acertos porque se eu colocasse para que quando o score recebisso fosse 0 resetar o placar isso poderia atrapalhar no desenvolvimento de outros modos de jogo.
 
   default:
     return state;

@@ -7,6 +7,7 @@ import { Avatar, Box, Button, Paper, Table,
 import { getStoredRanking } from '../services/localStorageAPI';
 import rankingStyles from './RankingStyle';
 import triviaLogo from '../assets/images/trivia-logo.gif';
+import LastGameDisplayer from '../components/LastGameDataDisplayer';
 
 const sStyles = rankingStyles;
 const { background2, background1 } = sStyles.tableRow;
@@ -17,18 +18,26 @@ const podium = [sStyles.firstPlace, sStyles.secondPlace,
 export default class Ranking extends Component {
   renderRanking = () => {
     const rankingArray = getStoredRanking();
-    return rankingArray.map(({ name, score, picture }, index) => {
+    const lastMatch = [...rankingArray]
+      .sort(({ date: { id: a } }, { date: { id: b } }) => b - a)[0];
+
+    return rankingArray.map(({ name, score, picture, date }, index) => {
       const isPodium = index <= LAST_PODIUM;
       const striped = (index % 2);
       const rowStyle = striped ? background2 : background1;
       const cellStyle = rowStyle.TableCell;
       const currStyle = isPodium ? podium[index] : podium[3];
+      const highlighter = lastMatch.date.id === date.id
+        ? ['6', '#BF0005']
+        : [0, ''];
       return (
         <TableRow
           key={ `${name}${index}` }
-          sx={ rowStyle }
+          sx={ { ...rowStyle,
+            borderTop: +highlighter[0],
+            borderBottom: +highlighter[0],
+            borderBlockColor: highlighter[1] } }
         >
-          {/* <TableCell align="center" sx={ { width: '33.5%' } } /> */}
           <TableCell align="center" sx={ cellStyle }>
             <img
               alt={ `${index + 1} place icon` }
@@ -59,7 +68,6 @@ export default class Ranking extends Component {
           >
             { `${score} points` }
           </TableCell>
-          {/* <TableCell align="center" sx={ { width: '33.5%' } } /> */}
         </TableRow>
       );
     });
@@ -74,7 +82,6 @@ export default class Ranking extends Component {
           padding: '5px',
         } }
       >
-        {/* <TableCell align="center" sx={ { width: '33.5%' } } /> */}
         {columns.map((column, index) => (
           <TableCell
             key={ index }
@@ -86,7 +93,6 @@ export default class Ranking extends Component {
           >
             {column}
           </TableCell>))}
-        {/* <TableCell align="center" sx={ { width: '33.5' } } /> */}
       </TableRow>
     );
   }
@@ -94,6 +100,8 @@ export default class Ranking extends Component {
   render() {
     const { renderRanking, renderTableHeadData } = this;
     const rankingArray = getStoredRanking();
+    const lastGameData = [...rankingArray]
+      .sort(({ date: { id: a } }, { date: { id: b } }) => b - a)[0];
     // const FIVE = 5;
     // const TEN = 10;
     // const TWENTY = 20;
@@ -102,11 +110,12 @@ export default class Ranking extends Component {
         container
         direction="row"
         alignItems="stretch"
-        sx={ { backgroundColor: 'black' } }
+        sx={ { backgroundColor: 'black', minHeight: '100vh' } }
       >
         <Grid
           item
           xs={ 2 }
+          sx={ { maxHeight: '10vw' } }
         >
           <Box
             component="img"
@@ -122,6 +131,7 @@ export default class Ranking extends Component {
         <Grid
           item
           xs={ 8 }
+          sx={ { maxHeight: '10vw' } }
         >
           <Typography
             align="center"
@@ -163,14 +173,14 @@ export default class Ranking extends Component {
               data-testid="btn-go-home"
               sx={ { m: 2 } }
             >
-              Play Again
+              { rankingArray ? 'Play Again' : 'Play' }
             </Button>
           </Paper>
         </Grid>
         <Grid
           item
           sx={ {
-            backgroundColor: '#FFB834' } }
+            backgroundColor: '#FFB834', minHeight: '50vw' } }
           alignContent="center"
           xs={ 12 }
           md={ 12 }
@@ -216,6 +226,9 @@ export default class Ranking extends Component {
             >
               LAST GAME DATA
             </Box>
+            { rankingArray
+              ? (<LastGameDisplayer lastGameData={ lastGameData } />)
+              : 'Nenhuma partida registrada' }
           </Paper>
         </Grid>
       </Grid>
