@@ -14,62 +14,61 @@ const LAST_PODIUM = 2;
 const podium = [sStyles.firstPlace, sStyles.secondPlace,
   sStyles.thirdPlace, sStyles.default];
 
-export default class Ranking extends Component {
-  renderRanking = () => {
-    const rankingArray = getStoredRanking();
-    const lastMatch = [...rankingArray]
-      .sort(({ date: { id: a } }, { date: { id: b } }) => b - a)[0];
+const rankingArray = getStoredRanking();
+const lastGameMatch = [...rankingArray]
+  .sort(({ date: { id: a } }, { date: { id: b } }) => b - a)[0];
 
-    return rankingArray.map(({ name, score, picture, date }, index) => {
-      const isPodium = index <= LAST_PODIUM;
-      const striped = (index % 2);
-      const rowStyle = striped ? background2 : background1;
-      const cellStyle = rowStyle.TableCell;
-      const currStyle = isPodium ? podium[index] : podium[3];
-      const highlighter = lastMatch.date.id === date.id
-        ? ['5', 'red']
-        : [0, ''];
-      return (
-        <TableRow
-          key={ `${name}${index}` }
-          sx={ { ...rowStyle,
-            border: +highlighter[0],
-            borderBlockColor: highlighter[1] } }
+export default class Ranking extends Component {
+  renderRanking = () => rankingArray.map(({ name, score, picture, date }, index) => {
+    const isPodium = index <= LAST_PODIUM;
+    const striped = (index % 2);
+    const rowStyle = striped ? background2 : background1;
+    const cellStyle = rowStyle.TableCell;
+    const currStyle = isPodium ? podium[index] : podium[3];
+    const highlighter = lastGameMatch.date.id === date.id
+      ? ['6', 'red']
+      : [0, ''];
+    return (
+      <TableRow
+        key={ `${name}${index}` }
+        sx={ { ...rowStyle,
+          borderTop: +highlighter[0],
+          borderBottom: +highlighter[0],
+          borderBlockColor: highlighter[1] } }
+      >
+        <TableCell align="center" sx={ cellStyle }>
+          <img
+            alt={ `${index + 1} place icon` }
+            src={ currStyle.imageSrc }
+            style={ currStyle.img }
+          />
+          <p>{`${index + 1}º place`}</p>
+        </TableCell>
+        <TableCell align="center" sx={ cellStyle }>
+          <Avatar
+            alt={ `${index + 1} place player: ${name} avatar` }
+            src={ picture }
+            style={ { width: '3.5em', margin: 'auto', height: '3.5em' } }
+            align="center"
+          />
+        </TableCell>
+        <TableCell
+          align="center"
+          sx={ cellStyle }
+          data-testid={ `player-name-${index}` }
         >
-          <TableCell align="center" sx={ cellStyle }>
-            <img
-              alt={ `${index + 1} place icon` }
-              src={ currStyle.imageSrc }
-              style={ currStyle.img }
-            />
-            <p>{`${index + 1}º place`}</p>
-          </TableCell>
-          <TableCell align="center" sx={ cellStyle }>
-            <Avatar
-              alt={ `${index + 1} place player: ${name} avatar` }
-              src={ picture }
-              style={ { width: '3.5em', margin: 'auto', height: '3.5em' } }
-              align="center"
-            />
-          </TableCell>
-          <TableCell
-            align="center"
-            sx={ cellStyle }
-            data-testid={ `player-name-${index}` }
-          >
-            { name }
-          </TableCell>
-          <TableCell
-            align="center"
-            sx={ cellStyle }
-            data-testid={ `player-score-${index}` }
-          >
-            { `${score} points` }
-          </TableCell>
-        </TableRow>
-      );
-    });
-  }
+          { name }
+        </TableCell>
+        <TableCell
+          align="center"
+          sx={ cellStyle }
+          data-testid={ `player-score-${index}` }
+        >
+          { `${score} points` }
+        </TableCell>
+      </TableRow>
+    );
+  })
 
   renderTableHeadData = () => {
     const columns = ['Ranking', 'Avatar', 'Player', 'Score'];
@@ -97,7 +96,6 @@ export default class Ranking extends Component {
 
   render() {
     const { renderRanking, renderTableHeadData } = this;
-    const rankingArray = getStoredRanking();
     // const FIVE = 5;
     // const TEN = 10;
     // const TWENTY = 20;
