@@ -41,9 +41,9 @@ class Game extends Component {
 
   componentWillUnmount() {
     const { name, email } = this.props;
-    const { gameScore } = this.state;
+    const { gameScore, questions } = this.state;
     const picture = `https://www.gravatar.com/avatar/${md5(email).toString()}`;
-    saveStoredScore(name, gameScore, picture);
+    saveStoredScore(name, gameScore, picture, questions);
   }
 
   updateTimer = () => {
@@ -78,7 +78,8 @@ class Game extends Component {
       this.setState({ gameScore: totalScore }, () => {
         dispatchScore(totalScore);
       });
-    }
+      questions[current].answered = 'correct';
+    } else questions[current].answered = 'incorrect';
   }
 
   handleNextButton = () => {

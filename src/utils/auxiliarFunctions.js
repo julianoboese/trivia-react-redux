@@ -1,6 +1,6 @@
 export const getCurrentDateNTime = () => {
-  const momentData = new Date(Date.now()).toString().replace(/\(|\)/gm, '').split(' ');
   const id = Date.now();
+  const momentData = new Date(id).toString().replace(/\(|\)/gm, '').split(' ');
   const momentObj = {
     id,
     day: momentData[2],
