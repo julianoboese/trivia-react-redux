@@ -45,57 +45,57 @@ class Configs extends Component {
       <form onSubmit={ handleSubmit }>
         <Stack direction="row" spacing={ 2 } sx={ { my: 4 } }>
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Categoria</InputLabel>
+            <InputLabel id="demo-simple-select-label">Category</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               name="category"
               value={ category }
-              label="Categoria"
+              label="Category"
               onChange={ handleChange }
             >
-              <MenuItem value="">Todas</MenuItem>
+              <MenuItem value="">All</MenuItem>
               {categories.length > 0 && categories.map((categ) => (
                 <MenuItem value={ categ.id } key={ categ.id }>{categ.name}</MenuItem>
               ))}
             </Select>
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Dificuldade</InputLabel>
+            <InputLabel id="demo-simple-select-label">Difficulty</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               name="difficulty"
               value={ difficulty }
-              label="Dificuldade"
+              label="Difficulty"
               onChange={ handleChange }
             >
-              <MenuItem value="">Todas</MenuItem>
-              <MenuItem value="easy">Fácil</MenuItem>
-              <MenuItem value="medium">Médio</MenuItem>
-              <MenuItem value="hard">Difícil</MenuItem>
+              <MenuItem value="">All</MenuItem>
+              <MenuItem value="easy">Easy</MenuItem>
+              <MenuItem value="medium">Medium</MenuItem>
+              <MenuItem value="hard">Hard</MenuItem>
             </Select>
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Tipo</InputLabel>
+            <InputLabel id="demo-simple-select-label">Type</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               name="type"
               value={ type }
-              label="Tipo"
+              label="Type"
               onChange={ handleChange }
             >
-              <MenuItem value="">Todos</MenuItem>
-              <MenuItem value="multiple">Múltipla escolha</MenuItem>
-              <MenuItem value="boolean">Verdadeiro / Falso</MenuItem>
+              <MenuItem value="">All</MenuItem>
+              <MenuItem value="multiple">Multiple options</MenuItem>
+              <MenuItem value="boolean">True / False</MenuItem>
             </Select>
           </FormControl>
         </Stack>
         <Stack direction="row" spacing={ 8 } justifyContent="center" sx={ { my: 4 } }>
           <Box sx={ { width: 300 } }>
             <Typography id="input-slider" gutterBottom>
-              Tempo
+              Time
             </Typography>
             <Slider
               aria-label="Temperature"
@@ -111,7 +111,7 @@ class Configs extends Component {
           </Box>
           <Box sx={ { width: 300 } }>
             <Typography id="input-slider" gutterBottom>
-              Quantidade de questões
+              Number of questions
             </Typography>
             <Slider
               aria-label="Temperature"
@@ -131,7 +131,7 @@ class Configs extends Component {
             size="large"
             color="success"
           >
-            Salvar
+            Save
           </Button>
         </Stack>
       </form>
@@ -154,7 +154,7 @@ class Configs extends Component {
               fontSize: 48,
               textAlign: 'center' } }
           >
-            Configurações
+            Settings
           </Box>
         </Typography>
         <Paper

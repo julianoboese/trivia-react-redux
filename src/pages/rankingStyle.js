@@ -1,7 +1,7 @@
-import firstPlaceImg from '../star-unscreen.gif';
-import secondPlaceImg from '../mushroom-jumping-gif-unscreen.gif';
-import thirdPlaceImg from '../yoshi_coin.gif';
-import noPodiumImg from '../mario-coin-unscreen.gif';
+import firstPlaceImg from '../assets/images/star-unscreen.gif';
+import secondPlaceImg from '../assets/images/mushroom-jumping-gif-unscreen.gif';
+import thirdPlaceImg from '../assets/images/yoshi_coin.gif';
+import noPodiumImg from '../assets/images/mario-coin-unscreen.gif';
 
 const rankingStyles = {
   default: {

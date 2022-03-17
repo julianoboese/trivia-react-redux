@@ -34,8 +34,8 @@ class Game extends Component {
       questions: gameData.results,
       timer: configs.initialTimer },
     () => {
-      this.updateTimer();
       this.setRandomAnswers();
+      this.updateTimer();
     });
   }
 
@@ -54,6 +54,22 @@ class Game extends Component {
       }
       clearInterval(this.intervalId);
     }), ONE_SECOND);
+  }
+
+  setRandomAnswers = () => {
+    const { currentQuestion, questions } = this.state;
+    const { correct_answer: correct, incorrect_answers: incorrects,
+    } = questions[currentQuestion];
+
+    const answers = [
+      { status: 'correct', text: correct, testid: 'correct-answer' },
+      ...incorrects.map((answer, index) => (
+        { status: `wrong_${index}`, text: answer, testid: `wrong-answer-${index}` }
+      )),
+    ];
+    const MEIO = 0.5;
+    const randomAnswers = answers.sort(() => Math.random() - MEIO);
+    this.setState({ randomAnswers });
   }
 
   handleAnswerClick = ({ target }) => {
@@ -103,26 +119,9 @@ class Game extends Component {
     }
   }
 
-  setRandomAnswers = () => {
-    const { currentQuestion, questions } = this.state;
-    const { correct_answer: correct, incorrect_answers: incorrects,
-    } = questions[currentQuestion];
-
-    const answers = [
-      { status: 'correct', text: correct, testid: 'correct-answer' },
-      ...incorrects.map((answer, index) => (
-        { status: `wrong_${index}`, text: answer, testid: `wrong-answer-${index}` }
-      )),
-    ];
-    const MEIO = 0.5;
-    const randomAnswers = answers.sort(() => Math.random() - MEIO);
-    this.setState({ randomAnswers });
-  }
-
   renderTimer = () => {
     const { timer } = this.state;
-    const { configs } = this.props;
-    const { initialTimer } = configs;
+    const { configs: { initialTimer } } = this.props;
     const countdownEquation = 100 - (initialTimer - timer) * (100 / initialTimer);
     return (
       <Box sx={ { position: 'relative', display: 'inline-flex', mb: 6 } }>
