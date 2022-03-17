@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Box, Button, Container, FormControl, InputLabel,
+import { Box, Button, FormControl, Grid, InputLabel,
   MenuItem, Paper, Select, Slider, Stack, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 import getCategories from '../services/fetchCategories';
 import { saveConfigsAction } from '../redux/actions';
+import triviaLogo from '../assets/images/trivia-logo.gif';
 
 class Configs extends Component {
   state = {
@@ -140,30 +142,60 @@ class Configs extends Component {
 
   render() {
     return (
-      <Container
-        sx={ { pt: 8,
-          bgcolor: '#FFB834',
-          minWidth: '100vw',
-          height: '100vh',
-          textAlign: 'center' } }
+      <Stack
+        direction="column"
+        justifyContent="center"
+        sx={ { bgcolor: '#FFB834', minWidth: '100vw', minHeight: '100vh' } }
       >
-        <Typography variant="h1" gutterBottom data-testid="settings-title">
-          <Box
-            sx={ { width: '100%',
-              fontWeight: 'bold',
-              fontSize: 48,
-              textAlign: 'center' } }
-          >
-            Settings
-          </Box>
-        </Typography>
-        <Paper
-          elevation={ 10 }
-          sx={ { my: 8, mx: 'auto', width: 0.6, py: 1, px: 4 } }
+        <Grid
+          container
+          direction="row"
+          alignItems="center"
+          sx={ { bgcolor: 'black', minWidth: '100vw' } }
         >
-          {this.renderForm()}
-        </Paper>
-      </Container>
+          <Grid
+            item
+            xs={ 2 }
+            sx={ { maxHeight: '10vw' } }
+          >
+            <Box component={ Link } to="/">
+              <Box
+                component="img"
+                sx={ {
+                  mt: 1.7,
+                  ml: 4,
+                  mb: 1,
+                  maxHeight: '75px',
+                } }
+                alt="Logo do trivia"
+                src={ triviaLogo }
+              />
+            </Box>
+          </Grid>
+          <Grid
+            item
+            xs={ 8 }
+            sx={ { textAlign: 'center' } }
+          >
+            <Typography
+              variant="h1"
+              gutterBottom
+              data-testid="settings-title"
+              sx={ { m: 0, fontWeight: 'bold', fontSize: 48, color: 'white' } }
+            >
+              SETTINGS
+            </Typography>
+          </Grid>
+        </Grid>
+        <Stack direction="column" justifyContent="center" sx={ { flexGrow: 1 } }>
+          <Paper
+            elevation={ 10 }
+            sx={ { mb: 8, mx: 'auto', width: 0.6, py: 1, px: 4 } }
+          >
+            {this.renderForm()}
+          </Paper>
+        </Stack>
+      </Stack>
     );
   }
 }

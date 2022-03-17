@@ -32,7 +32,7 @@ class Answers extends Component {
               value={ answer.status }
               className="answer-button"
               disabled={ answered !== '' || timer === 0 }
-              sx={ { mx: 2 } }
+              sx={ { mx: 2, textTransform: 'none' } }
             >
               {sanitizedAnswersTxt[index]}
             </Button>))}

@@ -3,6 +3,7 @@ import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Avatar, Box, Stack, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 import triviaLogo from '../assets/images/trivia-logo.gif';
 
 class Header extends Component {
@@ -46,20 +47,23 @@ class Header extends Component {
 
     return (
       <Stack
+        component="header"
         direction="row"
         spacing={ 4 }
         justifyContent="space-between"
         alignItems="center"
         sx={ { py: 1, px: 4, bgcolor: 'black', color: 'white' } }
       >
-        <Box
-          component="img"
-          sx={ {
-            maxHeight: '75px',
-          } }
-          alt="Logo do trivia"
-          src={ triviaLogo }
-        />
+        <Box component={ Link } to="/">
+          <Box
+            component="img"
+            sx={ {
+              maxHeight: '75px',
+            } }
+            alt="Logo do trivia"
+            src={ triviaLogo }
+          />
+        </Box>
         <Stack
           direction="row"
           spacing={ 4 }
