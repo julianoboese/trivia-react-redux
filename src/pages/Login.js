@@ -120,7 +120,7 @@ class Login extends Component {
         <Stack direction="row" spacing={ 4 }>
           <Button
             component={ Link }
-            to="/config"
+            to="/settings"
             type="button"
             variant="contained"
             size="large"
