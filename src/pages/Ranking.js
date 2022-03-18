@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import { Avatar, Box, Button, Paper, Table,
   TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { getStoredRanking } from '../services/localStorageAPI';
-import rankingStyles from './RankingStyle';
+import rankingStyles from './rankingStyle';
 import triviaLogo from '../assets/images/trivia-logo.gif';
 import LastGameDisplayer from '../components/LastGameDataDisplayer';
 
@@ -117,16 +117,18 @@ export default class Ranking extends Component {
           xs={ 2 }
           sx={ { maxHeight: '10vw' } }
         >
-          <Box
-            component="img"
-            sx={ {
-              mt: 1.7,
-              ml: 4,
-              maxHeight: '75px',
-            } }
-            alt="Logo do trivia"
-            src={ triviaLogo }
-          />
+          <Box component={ Link } to="/">
+            <Box
+              component="img"
+              sx={ {
+                mt: 1.7,
+                ml: 4,
+                maxHeight: '75px',
+              } }
+              alt="Logo do trivia"
+              src={ triviaLogo }
+            />
+          </Box>
         </Grid>
         <Grid
           item
