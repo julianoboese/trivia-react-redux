@@ -11,8 +11,7 @@ export default class LastGameDisplayer extends PureComponent {
 
   handleChange = ({ target }) => {
     const { name, value } = target;
-    const secondState = `${name}Changed`;
-    this.setState(({ [name]: value, [secondState]: true }));
+    this.setState(({ [name]: value }));
   };
 
   render() {
@@ -74,10 +73,13 @@ export default class LastGameDisplayer extends PureComponent {
               ))}
             </Select>
             <CardContent>
-              Answers:
+              <Typography component="h6" variant="h6">Difficulty:</Typography>
+              <Typography>{ currentQuestion.difficulty }</Typography>
+              <Typography component="h6" variant="h6"> Answers: </Typography>
               { answers.map(({ text, status }) => (
                 <Typography
                   key={ text }
+                  component="p"
                   sx={ { color: status === 'correct' ? 'green' : 'black' } }
                 >
                   {sanitizeHtml(text)}

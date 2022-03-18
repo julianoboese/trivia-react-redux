@@ -40,10 +40,10 @@ class Game extends Component {
   }
 
   componentWillUnmount() {
-    const { name, email } = this.props;
+    const { name, email, configs } = this.props;
     const { gameScore, questions } = this.state;
     const picture = `https://www.gravatar.com/avatar/${md5(email).toString()}`;
-    saveStoredScore(name, gameScore, picture, questions);
+    saveStoredScore({ name, gameScore, picture }, questions, configs);
   }
 
   updateTimer = () => {
