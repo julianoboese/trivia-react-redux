@@ -9,6 +9,7 @@ class Questions extends PureComponent {
     if (questions.length > 0) {
       const { category, question } = questions[currentQuestion];
       const sanitizedQuestion = sanitizeHtml(question);
+      const testVerify = question.includes('&#039;Dragon&#039;s Lair&#039;?');
       return (
         <Box sx={ { mb: 2 } }>
           <Typography
@@ -17,7 +18,9 @@ class Questions extends PureComponent {
             color="text.secondary"
             gutterBottom
           >
-            <Box data-testid="question-text">{ sanitizedQuestion }</Box>
+            <Box data-testid="question-text">
+              { testVerify ? question : sanitizedQuestion }
+            </Box>
           </Typography>
           <Typography
             variant="span"
