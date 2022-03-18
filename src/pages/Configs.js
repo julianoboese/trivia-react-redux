@@ -100,7 +100,8 @@ class Configs extends Component {
               Time
             </Typography>
             <Slider
-              aria-label="Temperature"
+              aria-label={ `slider type input to select the
+                interval in seconds between questions` }
               name="initialTimerStr"
               value={ initialTimerStr }
               valueLabelDisplay="auto"
@@ -116,7 +117,8 @@ class Configs extends Component {
               Number of questions
             </Typography>
             <Slider
-              aria-label="Temperature"
+              aria-label={ `slider type input to select the
+              quantity of questions per game` }
               name="quantityStr"
               value={ quantityStr }
               valueLabelDisplay="auto"
