@@ -33,12 +33,12 @@ export default class RankingTable extends Component {
       // categoryFilter, difficultyFilter
     } = this.state;
     const rankingArray = getStoredRanking() || [];
-    const filteredRanking = rankingArray
-      .filter(({ configs: { initialTimer } }) => initialTimer === timerFilter)
-      .filter(({ configs: { quantity } }) => quantity === questionsQuantityFilter);
     const lastMatch = [...rankingArray]
       .sort(({ date: { id: a } }, { date: { id: b } }) => b - a)[0];
     if (rankingArray.length > 0) {
+      const filteredRanking = rankingArray
+        .filter(({ configs: { initialTimer } }) => initialTimer === timerFilter)
+        .filter(({ configs: { quantity } }) => quantity === questionsQuantityFilter);
       return filteredRanking.map(({ name, score, picture, date }, index) => {
         const isPodium = index <= LAST_PODIUM;
         const striped = (index % 2);

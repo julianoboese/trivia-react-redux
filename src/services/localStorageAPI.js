@@ -15,7 +15,7 @@ export const saveStoredScore = (playerData, questions, configs) => {
   const newData = {
     name: playerData.name,
     score: playerData.gameScore,
-    picture: playerData.pictura,
+    picture: playerData.picture,
     date: gameDateData,
     questions,
     configs };
