@@ -52,6 +52,17 @@ npm start
 npm test
 ```
 
+## 👨‍💻👩‍💻 Contribuintes
+<div>
+    <table>
+        <tr>
+            <td align="center"><a href="https://github.com/julianoboese"><img src="https://avatars.githubusercontent.com/u/93009900" width="135px;" height="135px;" alt=""/><br /><b>Juliano Boese</b></a></td>
+            <td align="center"><a href="https://github.com/c-swame"><img src="https://avatars.githubusercontent.com/u/93006927?v=4" width="135px;" height="135px;" alt=""/><br /><b>Caio Swame</b></a></td>
+            <td align="center"><a href="https://github.com/joseviniciusb"><img src="https://avatars.githubusercontent.com/u/93006559?v=4" width="135px;" height="135px; alt=""/><br /><b>Zé</b></a></td>
+        </tr>
+    </table>
+</div>
+
 ## 💬 Contatos
 
 <div align="center" style="display: inline_block">
